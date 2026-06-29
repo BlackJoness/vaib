@@ -10,6 +10,8 @@ export type GridItem = {
   corHex: string;
   preco: number | string;
   img?: string | null;
+  cores?: number;
+  novo?: boolean;
 };
 
 // Componente client (ilha de interatividade) — recebe dados já buscados no servidor
@@ -19,7 +21,7 @@ export default function ProductGrid({ itens }: { itens: GridItem[] }) {
       variants={stagger}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.15 }}
       className="grid grid-cols-2 gap-4 md:grid-cols-4"
     >
       {itens.map((p) => (
@@ -30,6 +32,8 @@ export default function ProductGrid({ itens }: { itens: GridItem[] }) {
           corHex={p.corHex}
           preco={p.preco}
           img={p.img}
+          cores={p.cores}
+          novo={p.novo}
         />
       ))}
     </motion.div>

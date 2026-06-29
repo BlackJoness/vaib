@@ -10,9 +10,19 @@ type Props = {
   corHex: string;
   preco: number | string;
   img?: string | null;
+  cores?: number; // qtd. de cores disponíveis (selo)
+  novo?: boolean;
 };
 
-export default function ProductCard({ nome, cor, corHex, preco, img }: Props) {
+export default function ProductCard({
+  nome,
+  cor,
+  corHex,
+  preco,
+  img,
+  cores,
+  novo,
+}: Props) {
   return (
     <motion.article
       variants={fadeUp}
@@ -35,6 +45,16 @@ export default function ProductCard({ nome, cor, corHex, preco, img }: Props) {
             style={{ backgroundColor: corHex }}
             aria-label={`${nome} — ${cor}`}
           />
+        )}
+        {novo && (
+          <span className="absolute left-2 top-2 rounded-full bg-grafite px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-creme">
+            Novo
+          </span>
+        )}
+        {cores && cores > 1 && (
+          <span className="absolute bottom-2 right-2 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-grafite">
+            {cores} cores
+          </span>
         )}
       </div>
       <div className="mt-3 flex items-center justify-between">

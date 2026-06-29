@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Poppins, Inter } from "next/font/google";
 import "./globals.css";
+import TopBar from "@/components/TopBar";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 // Tipografia do Brandbook — variáveis consumidas pelo tailwind.config.ts
 const poppins = Poppins({
@@ -26,7 +29,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR" className={`${poppins.variable} ${inter.variable}`}>
-      <body className="font-sans">{children}</body>
+      <body className="bg-creme font-sans text-grafite">
+        <TopBar />
+        <Navbar />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
