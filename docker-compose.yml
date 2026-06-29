@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: sole_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: sole
+      POSTGRES_PASSWORD: sole
+      POSTGRES_DB: sole
+    ports:
+      - "5432:5432"
+    volumes:
+      - sole_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sole -d sole"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  sole_db:
