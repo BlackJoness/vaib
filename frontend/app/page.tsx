@@ -1,43 +1,42 @@
-"use client";
-import { motion } from "framer-motion";
-import { stagger } from "@/lib/motion";
 import Hero from "@/components/Hero";
-import ProductCard from "@/components/ProductCard";
+import ProductGrid, { type GridItem } from "@/components/ProductGrid";
+import { getProducts } from "@/lib/api";
 
-// Dados de exemplo — em produção viriam da API (GET /products)
-const DESTAQUES = [
-  { id: "1", nome: "Blusa Brisa", cor: "Coral Sol", preco: "R$ 159,90", img: "/produtos/brisa-coral.jpg" },
-  { id: "2", nome: "Calça Fluxo", cor: "Verde Brisa", preco: "R$ 179,90", img: "/produtos/fluxo-verde.jpg" },
-  { id: "3", nome: "Jaleco Aura", cor: "Azul Sereno", preco: "R$ 219,90", img: "/produtos/aura-azul.jpg" },
-  { id: "4", nome: "Blusa Brisa", cor: "Amarelo Manhã", preco: "R$ 159,90", img: "/produtos/brisa-amarelo.jpg" },
+// Server Component: busca os produtos no servidor (SSR/ISR → bom para SEO).
+// Se a API estiver fora, cai num conjunto de exemplo para não quebrar a página.
+const FALLBACK: GridItem[] = [
+  { id: "1", nome: "Blusa Brisa", cor: "Coral Sol", corHex: "#FF7E67", preco: 159.9 },
+  { id: "2", nome: "Calça Fluxo", cor: "Verde Brisa", corHex: "#7FD8BE", preco: 179.9 },
+  { id: "3", nome: "Jaleco Aura", cor: "Azul Sereno", corHex: "#8EC5E8", preco: 219.9 },
+  { id: "4", nome: "Blusa Brisa", cor: "Amarelo Manhã", corHex: "#FFC857", preco: 159.9 },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const produtos = await getProducts();
+
+  // Para a vitrine, usa a 1ª variante de cada produto como destaque
+  const itens: GridItem[] =
+    produtos.length > 0
+      ? produtos.slice(0, 8).map((p) => {
+          const v = p.variants[0];
+          return {
+            id: p.id,
+            nome: p.nome,
+            cor: v?.cor ?? "—",
+            corHex: v?.corHex ?? "#FFC857",
+            preco: v?.preco ?? p.precoBase,
+          };
+        })
+      : FALLBACK;
+
   return (
     <main className="bg-creme">
       <Hero />
-
       <section className="px-8 py-16">
         <h2 className="mb-8 font-display text-3xl font-bold text-grafite">
           Mais queridos
         </h2>
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          className="grid grid-cols-2 gap-4 md:grid-cols-4"
-        >
-          {DESTAQUES.map((p) => (
-            <ProductCard
-              key={p.id}
-              nome={p.nome}
-              cor={p.cor}
-              preco={p.preco}
-              img={p.img}
-            />
-          ))}
-        </motion.div>
+        <ProductGrid itens={itens} />
       </section>
     </main>
   );

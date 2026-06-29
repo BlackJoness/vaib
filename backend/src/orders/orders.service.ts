@@ -2,41 +2,51 @@ import {
   Injectable,
   BadRequestException,
   NotFoundException,
+  ConflictException,
 } from "@nestjs/common";
-import { OrderStatus } from "@prisma/client";
+import { OrderStatus, Prisma } from "@prisma/client";
 import { PrismaService } from "../prisma/prisma.service";
 import { NEXT_STATUS } from "./order-status.enum";
+import { CreateOrderDto } from "./dto/create-order.dto";
+
+type ItemData = {
+  variantId: string;
+  quantidade: number;
+  precoUnitario: Prisma.Decimal;
+};
 
 @Injectable()
 export class OrdersService {
   constructor(private prisma: PrismaService) {}
 
-  // Cria pedido: valida estoque, baixa estoque e nasce "Aguardando Pagamento"
-  async create(dto: {
-    clienteNome: string;
-    clienteEmail: string;
-    items: { variantId: string; quantidade: number }[];
-  }) {
+  // Cria pedido: baixa estoque de forma segura (sem oversell) e nasce
+  // "Aguardando Pagamento". Tudo numa única transação.
+  async create(dto: CreateOrderDto) {
     return this.prisma.$transaction(async (tx) => {
-      let total = 0;
-      const itemsData = [];
+      let total = new Prisma.Decimal(0);
+      const itemsData: ItemData[] = [];
 
       for (const it of dto.items) {
         const variant = await tx.variant.findUnique({
           where: { id: it.variantId },
         });
-        if (!variant)
+        if (!variant) {
           throw new NotFoundException(`Variante ${it.variantId} inexistente`);
-        if (variant.estoque < it.quantidade) {
-          throw new BadRequestException(
+        }
+
+        // Decremento condicional: só baixa se ainda houver estoque suficiente.
+        // Evita corrida entre pedidos simultâneos (oversell).
+        const baixa = await tx.variant.updateMany({
+          where: { id: variant.id, estoque: { gte: it.quantidade } },
+          data: { estoque: { decrement: it.quantidade } },
+        });
+        if (baixa.count === 0) {
+          throw new ConflictException(
             `Estoque insuficiente para SKU ${variant.sku}`,
           );
         }
-        await tx.variant.update({
-          where: { id: variant.id },
-          data: { estoque: { decrement: it.quantidade } },
-        });
-        total += Number(variant.preco) * it.quantidade;
+
+        total = total.add(variant.preco.mul(it.quantidade));
         itemsData.push({
           variantId: variant.id,
           quantidade: it.quantidade,

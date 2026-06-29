@@ -4,7 +4,9 @@ import { fadeUp, stagger } from "@/lib/motion";
 
 export default function Hero() {
   return (
-    <section className="relative h-[92vh] w-full overflow-hidden bg-creme">
+    <section className="relative flex h-[92vh] w-full items-end overflow-hidden">
+      {/* Fundo: gradiente da marca como base; se houver vídeo em /public, ele cobre */}
+      <div className="absolute inset-0 bg-gradient-to-br from-coral via-manha to-sereno" />
       <video
         className="absolute inset-0 h-full w-full object-cover"
         autoPlay
@@ -12,14 +14,16 @@ export default function Hero() {
         loop
         playsInline
         poster="/hero-poster.jpg"
-        src="/hero.mp4"
-      />
-      <div className="absolute inset-0 bg-grafite/20" />
+      >
+        <source src="/hero.mp4" type="video/mp4" />
+      </video>
+      <div className="absolute inset-0 bg-grafite/25" />
+
       <motion.div
         variants={stagger}
         initial="hidden"
         animate="show"
-        className="relative z-10 flex h-full flex-col items-start justify-end gap-4 p-8 md:p-16"
+        className="relative z-10 flex flex-col items-start gap-4 p-8 md:p-16"
       >
         <motion.h1
           variants={fadeUp}

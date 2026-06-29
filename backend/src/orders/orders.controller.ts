@@ -1,5 +1,6 @@
 import { Body, Controller, Param, Patch, Post } from "@nestjs/common";
 import { OrdersService } from "./orders.service";
+import { CreateOrderDto } from "./dto/create-order.dto";
 
 @Controller("orders")
 export class OrdersController {
@@ -7,14 +8,7 @@ export class OrdersController {
 
   // Cria pedido → status inicial "Aguardando Pagamento"
   @Post()
-  create(
-    @Body()
-    dto: {
-      clienteNome: string;
-      clienteEmail: string;
-      items: { variantId: string; quantidade: number }[];
-    },
-  ) {
+  create(@Body() dto: CreateOrderDto) {
     return this.orders.create(dto);
   }
 

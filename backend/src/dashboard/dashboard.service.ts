@@ -8,28 +8,36 @@ export class DashboardService {
   constructor(private prisma: PrismaService) {}
 
   async getKpis() {
-    // 1) Produto mais vendido (soma de quantidades por produto)
+    // 1) Produto mais vendido — sem N+1:
+    //    agrega por variante e resolve todas as variantes em UMA query.
     const porVariante = await this.prisma.orderItem.groupBy({
       by: ["variantId"],
       _sum: { quantidade: true },
-      orderBy: { _sum: { quantidade: "desc" } },
     });
 
-    const agregadoPorProduto = new Map<string, number>();
-    for (const linha of porVariante) {
-      const v = await this.prisma.variant.findUnique({
-        where: { id: linha.variantId },
+    let produtoMaisVendido: { nome: string; unidades: number } | null = null;
+
+    if (porVariante.length > 0) {
+      const variants = await this.prisma.variant.findMany({
+        where: { id: { in: porVariante.map((v) => v.variantId) } },
         include: { product: true },
       });
-      if (!v) continue;
-      const atual = agregadoPorProduto.get(v.product.nome) ?? 0;
-      agregadoPorProduto.set(
-        v.product.nome,
-        atual + (linha._sum.quantidade ?? 0),
+      const nomePorVariante = new Map(
+        variants.map((v) => [v.id, v.product.nome]),
       );
+
+      const totalPorProduto = new Map<string, number>();
+      for (const linha of porVariante) {
+        const nome = nomePorVariante.get(linha.variantId);
+        if (!nome) continue;
+        totalPorProduto.set(
+          nome,
+          (totalPorProduto.get(nome) ?? 0) + (linha._sum.quantidade ?? 0),
+        );
+      }
+      const top = [...totalPorProduto.entries()].sort((a, b) => b[1] - a[1])[0];
+      if (top) produtoMaisVendido = { nome: top[0], unidades: top[1] };
     }
-    const maisVendido =
-      [...agregadoPorProduto.entries()].sort((a, b) => b[1] - a[1])[0] ?? null;
 
     // 2) Alerta de estoque baixo por tamanho
     const estoqueBaixo = await this.prisma.variant.findMany({
@@ -39,9 +47,7 @@ export class DashboardService {
     });
 
     return {
-      produtoMaisVendido: maisVendido
-        ? { nome: maisVendido[0], unidades: maisVendido[1] }
-        : null,
+      produtoMaisVendido,
       alertasEstoqueBaixo: estoqueBaixo.map((v) => ({
         sku: v.sku,
         produto: v.product.nome,
