@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { fadeUp } from "@/lib/motion";
 import { formatBRL } from "@/lib/format";
@@ -9,6 +10,7 @@ type Props = {
   cor: string;
   corHex: string;
   preco: number | string;
+  slug?: string;
   img?: string | null;
   cores?: number; // qtd. de cores disponíveis (selo)
   novo?: boolean;
@@ -19,11 +21,12 @@ export default function ProductCard({
   cor,
   corHex,
   preco,
+  slug,
   img,
   cores,
   novo,
 }: Props) {
-  return (
+  const card = (
     <motion.article
       variants={fadeUp}
       whileHover={{ y: -6 }}
@@ -67,5 +70,14 @@ export default function ProductCard({
         </span>
       </div>
     </motion.article>
+  );
+
+  // Se houver slug, o card vira link para a página de produto (PDP)
+  return slug ? (
+    <Link href={`/produto/${slug}`} aria-label={nome}>
+      {card}
+    </Link>
+  ) : (
+    card
   );
 }

@@ -1,4 +1,4 @@
-# Solê — Guia do Desenvolvedor & Deploy
+# Vaib~ — Guia do Desenvolvedor & Deploy
 
 Monorepo do MVP de e-commerce de scrubs. Três aplicações independentes:
 
@@ -6,7 +6,7 @@ Monorepo do MVP de e-commerce de scrubs. Três aplicações independentes:
 |---|---|---|---|
 | `frontend/` | Loja | Next.js + Tailwind + Framer Motion | Vercel |
 | `backend/` | API | NestJS + Prisma | Render |
-| `dashboard/` | Painel de gestão | React + Shadcn UI | Vercel |
+| `dashboard/` | Painel de gestão | Next.js + Shadcn UI | Vercel |
 | (gerenciado) | Banco | PostgreSQL | Supabase |
 
 > **Importante:** cada pasta é um projeto separado com seu próprio `package.json`. No deploy, você aponta o **Root Directory** de cada plataforma para a pasta certa.
@@ -52,9 +52,9 @@ npm run dev                   # loja em http://localhost:3000
 cd codigo
 git init
 git add .
-git commit -m "feat: MVP Solê inicial"
+git commit -m "feat: MVP Vaib inicial"
 git branch -M main
-git remote add origin https://github.com/SEU_USUARIO/sole.git
+git remote add origin https://github.com/SEU_USUARIO/vaib.git
 git push -u origin main
 ```
 
@@ -74,7 +74,7 @@ git push -u origin main
 ### Passo 4 — Loja no Vercel
 1. New Project → importe o mesmo repositório.
 2. **Root Directory:** `frontend`
-3. **Environment:** `NEXT_PUBLIC_API_URL=https://sole-api.onrender.com`
+3. **Environment:** `NEXT_PUBLIC_API_URL=https://vaib-api.onrender.com`
 4. Deploy.
 
 ### Passo 5 — Dashboard no Vercel

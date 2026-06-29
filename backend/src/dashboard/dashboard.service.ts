@@ -46,7 +46,17 @@ export class DashboardService {
       orderBy: { estoque: "asc" },
     });
 
+    // 3) Total de vendas (soma do valor de todos os pedidos) + nº de pedidos
+    const vendas = await this.prisma.order.aggregate({
+      _sum: { total: true },
+      _count: true,
+    });
+    const totalVendas = Number(vendas._sum.total ?? 0);
+    const totalPedidos = vendas._count;
+
     return {
+      totalVendas,
+      totalPedidos,
       produtoMaisVendido,
       alertasEstoqueBaixo: estoqueBaixo.map((v) => ({
         sku: v.sku,

@@ -1,8 +1,8 @@
 {
-  "name": "sole-backend",
+  "name": "vaib-backend",
   "version": "0.1.0",
   "private": true,
-  "description": "Solê — API (NestJS + Prisma + PostgreSQL)",
+  "description": "Vaib — API (NestJS + Prisma + PostgreSQL)",
   "scripts": {
     "build": "nest build",
     "start": "nest start",

@@ -8,8 +8,8 @@ Este é o arquivo que você abre no Cursor para subir **front-end e back-end** p
 
 1. No Cursor: **File → Open Folder** → selecione a pasta **`codigo`** (esta pasta).
 2. Crie um repositório **vazio** no GitHub (sem README): https://github.com/new
-   - Nome sugerido: `sole`
-   - Copie a URL que ele te dá, algo como: `https://github.com/SEU_USUARIO/sole.git`
+   - Nome sugerido: `vaib`
+   - Copie a URL que ele te dá, algo como: `https://github.com/SEU_USUARIO/vaib.git`
 3. Abra o chat de IA do Cursor (`Ctrl+L` / `Cmd+L`) e **cole o prompt abaixo**, trocando a URL.
 
 ---
@@ -33,7 +33,7 @@ Faça, no terminal integrado, exatamente isto:
    git commit -m "chore: ajustes" || echo "nada novo para commitar"
 
 4. Conecte ao meu repositório remoto (troque pela MINHA url):
-   git remote add origin https://github.com/SEU_USUARIO/sole.git
+   git remote add origin https://github.com/SEU_USUARIO/vaib.git
 
 5. Envie para o GitHub:
    git push -u origin main

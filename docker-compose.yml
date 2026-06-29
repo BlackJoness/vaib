@@ -1,21 +1,21 @@
 services:
   db:
     image: postgres:16-alpine
-    container_name: sole_db
+    container_name: vaib_db
     restart: unless-stopped
     environment:
-      POSTGRES_USER: sole
-      POSTGRES_PASSWORD: sole
-      POSTGRES_DB: sole
+      POSTGRES_USER: vaib
+      POSTGRES_PASSWORD: vaib
+      POSTGRES_DB: vaib
     ports:
       - "5432:5432"
     volumes:
-      - sole_db:/var/lib/postgresql/data
+      - vaib_db:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U sole -d sole"]
+      test: ["CMD-SHELL", "pg_isready -U vaib -d vaib"]
       interval: 5s
       timeout: 5s
       retries: 10
 
 volumes:
-  sole_db:
+  vaib_db:

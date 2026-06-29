@@ -9,6 +9,7 @@ export type GridItem = {
   cor: string;
   corHex: string;
   preco: number | string;
+  slug?: string;
   img?: string | null;
   cores?: number;
   novo?: boolean;
@@ -31,6 +32,7 @@ export default function ProductGrid({ itens }: { itens: GridItem[] }) {
           cor={p.cor}
           corHex={p.corHex}
           preco={p.preco}
+          slug={p.slug}
           img={p.img}
           cores={p.cores}
           novo={p.novo}

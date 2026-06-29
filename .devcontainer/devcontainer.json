@@ -1,14 +1,14 @@
 {
-  "name": "Solê — Dev",
+  "name": "Vaib~ — Dev",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:2": {}
   },
-  "forwardPorts": [3000, 3001, 5173, 5432],
+  "forwardPorts": [3000, 3001, 3002, 5432],
   "portsAttributes": {
     "3000": { "label": "Loja (Next.js)" },
     "3001": { "label": "API (NestJS)" },
-    "5173": { "label": "Dashboard (Vite)" },
+    "3002": { "label": "Dashboard (Next.js)" },
     "5432": { "label": "PostgreSQL" }
   },
   "postCreateCommand": "bash setup.sh",

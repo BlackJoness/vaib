@@ -1,4 +1,4 @@
-# Solê — Análise Técnica Sênior (Front · Back · Banco)
+# Vaib~ — Análise Técnica Sênior (Front · Back · Banco)
 
 Revisão completa do MVP. Classificação por severidade e por categoria.
 
@@ -48,7 +48,7 @@ Revisão completa do MVP. Classificação por severidade e por categoria.
 
 - **Banco:** sem `onDelete` definido nas relações → apagar um `Product` com variantes dá erro. Definir `onDelete: Restrict/Cascade` conscientemente. Adicionar índice em `Order.createdAt` (relatórios). Estoque pode ficar negativo no nível do banco — adicionar `CHECK (estoque >= 0)` via migration raw.
 - **Histórico de pedido:** não há trilha de auditoria de mudança de status. Para corporativo, criar tabela `OrderStatusHistory`.
-- **Catálogo (restrição do projeto):** os produtos ainda são genéricos no `seed.ts`. Ao copiar dos sites de referência, a **única** alteração permitida é a marca (nome/descrição Solê) — preços, modelagem e fotos devem refletir as referências. Isso ainda não foi transcrito.
+- **Catálogo (restrição do projeto):** os produtos ainda são genéricos no `seed.ts`. Ao copiar dos sites de referência, a **única** alteração permitida é a marca (nome/descrição Vaib) — preços, modelagem e fotos devem refletir as referências. Isso ainda não foi transcrito.
 - **Segurança:** `.env` já está no `.gitignore` (correto). Garantir que nenhuma chave do Supabase/Render entre no repositório.
 - **Versionamento:** branch atual `master`; renomear para `main`.
 

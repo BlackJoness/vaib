@@ -8,12 +8,12 @@ import Newsletter from "@/components/Newsletter";
 import Reveal from "@/components/Reveal";
 import { getProducts } from "@/lib/api";
 
-// Vitrine de exemplo (usada se a API estiver fora). Conteúdo original Solê.
+// Vitrine de exemplo (usada se a API estiver fora). Conteúdo original Vaib.
 const FALLBACK: GridItem[] = [
-  { id: "1", nome: "Blusa Brisa", cor: "Coral Sol", corHex: "#FF7E67", preco: 159.9, cores: 6, novo: true },
-  { id: "2", nome: "Calça Fluxo", cor: "Verde Brisa", corHex: "#7FD8BE", preco: 179.9, cores: 6 },
-  { id: "3", nome: "Jaleco Aura", cor: "Azul Sereno", corHex: "#8EC5E8", preco: 219.9, cores: 4 },
-  { id: "4", nome: "Blusa Brisa", cor: "Amarelo Manhã", corHex: "#FFC857", preco: 159.9, cores: 6, novo: true },
+  { id: "1", nome: "Blusa Brisa", slug: "blusa-brisa", cor: "Coral Sol", corHex: "#FF7E67", preco: 159.9, cores: 6, novo: true },
+  { id: "2", nome: "Calça Fluxo", slug: "calca-fluxo", cor: "Verde Brisa", corHex: "#7FD8BE", preco: 179.9, cores: 6 },
+  { id: "3", nome: "Jaleco Aura", slug: "jaleco-aura", cor: "Azul Sereno", corHex: "#8EC5E8", preco: 219.9, cores: 4 },
+  { id: "4", nome: "Blusa Brisa", slug: "blusa-brisa", cor: "Amarelo Manhã", corHex: "#FFC857", preco: 159.9, cores: 6, novo: true },
 ];
 
 export default async function Home() {
@@ -27,6 +27,7 @@ export default async function Home() {
           return {
             id: p.id,
             nome: p.nome,
+            slug: p.slug,
             cor: v?.cor ?? "—",
             corHex: v?.corHex ?? "#FFC857",
             preco: v?.preco ?? p.precoBase,
