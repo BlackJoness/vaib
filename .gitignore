@@ -1,0 +1,24 @@
+# Dependências
+node_modules/
+**/node_modules/
+
+# Builds
+.next/
+out/
+dist/
+build/
+
+# Ambiente (NUNCA versionar segredos)
+.env
+.env.local
+.env*.local
+**/.env
+**/.env.local
+
+# Prisma
+**/migrations/dev.db
+
+# Sistema / logs
+.DS_Store
+*.log
+npm-debug.log*
