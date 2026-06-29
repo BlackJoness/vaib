@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vaib — Scrubs & Jalecos · Apresentação de Marca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Caveat:wght@600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --coral:#FF6B6B;
+    --sun:#FFD23F;
+    --mint:#34C9B0;
+    --sky:#5AA9E6;
+    --lilac:#B388EB;
+    --cream:#FFF8F1;
+    --cream-2:#FFEFE2;
+    --ink:#2B2A33;
+    --ink-soft:#2B2A33cc;
+    --white:#ffffff;
+    --radius:22px;
+    --shadow:0 18px 50px -22px rgba(43,42,51,.35);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    background:var(--cream);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{font-family:'Poppins',sans-serif;letter-spacing:-.02em;line-height:1.05}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+  .script{font-family:'Caveat',cursive;color:var(--coral)}
+
+  /* ---------- LOGO ---------- */
+  .logo{display:inline-flex;align-items:center;gap:2px;font-family:'Poppins',sans-serif;font-weight:800;font-size:30px;letter-spacing:-.04em;color:var(--ink);text-decoration:none}
+  .logo .dot{width:11px;height:11px;border-radius:50%;background:var(--coral);display:inline-block;margin:0 1px 16px 1px}
+  .logo .smile{position:relative}
+
+  /* ---------- NAV ---------- */
+  nav{position:sticky;top:0;z-index:50;background:rgba(255,248,241,.82);backdrop-filter:blur(12px);border-bottom:1px solid #2b2a3312}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:74px}
+  .nav-links{display:flex;gap:30px;list-style:none}
+  .nav-links a{color:var(--ink-soft);text-decoration:none;font-weight:500;font-size:15px;transition:color .2s}
+  .nav-links a:hover{color:var(--coral)}
+  .nav-cta{display:flex;align-items:center;gap:16px}
+  .pill{background:var(--ink);color:var(--cream);border:none;border-radius:999px;padding:11px 22px;font-weight:600;font-size:14px;font-family:'Inter';cursor:pointer;transition:transform .2s, background .2s}
+  .pill:hover{transform:translateY(-2px);background:var(--coral)}
+  @media(max-width:820px){.nav-links{display:none}}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;padding:70px 0 40px;overflow:hidden}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center}
+  .hero h1{font-size:clamp(42px,6vw,78px);font-weight:800}
+  .hero h1 em{font-style:normal;color:var(--coral)}
+  .hero p{font-size:18px;max-width:440px;margin:22px 0 30px;color:var(--ink-soft)}
+  .hero-tag{display:inline-flex;align-items:center;gap:8px;background:var(--cream-2);border-radius:999px;padding:7px 16px;font-size:13px;font-weight:600;color:var(--ink-soft);margin-bottom:22px}
+  .hero-tag span{width:8px;height:8px;border-radius:50%;background:var(--mint)}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+  .btn-ghost{background:transparent;border:1.5px solid #2b2a3322;border-radius:999px;padding:12px 24px;font-weight:600;font-size:14px;cursor:pointer;color:var(--ink);transition:border-color .2s}
+  .btn-ghost:hover{border-color:var(--coral)}
+  .hero-stage{position:relative;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
+  .blob{position:absolute;border-radius:50%;filter:blur(2px);opacity:.9;z-index:0}
+  .b1{width:330px;height:330px;background:var(--sun);top:6%;left:8%}
+  .b2{width:230px;height:230px;background:var(--mint);bottom:4%;right:6%;opacity:.85}
+  .b3{width:120px;height:120px;background:var(--lilac);top:48%;left:0;opacity:.7}
+  .hero-stage svg.garment{position:relative;z-index:2;width:78%;filter:drop-shadow(0 30px 40px rgba(43,42,51,.22))}
+  .float-chip{position:absolute;z-index:3;background:var(--white);border-radius:16px;padding:10px 14px;box-shadow:var(--shadow);font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px}
+  .fc1{top:14%;right:2%}
+  .fc2{bottom:12%;left:-2%}
+  .fc-dot{width:14px;height:14px;border-radius:50%}
+  @media(max-width:820px){.hero-grid{grid-template-columns:1fr}.hero-stage{order:-1;max-width:380px;margin:0 auto}}
+
+  /* ---------- COLOR STRIP ---------- */
+  .strip{background:var(--ink);color:var(--cream);padding:26px 0}
+  .strip-in{display:flex;align-items:center;justify-content:center;gap:30px;flex-wrap:wrap}
+  .strip .label{font-weight:600;font-size:14px;opacity:.85;letter-spacing:.04em;text-transform:uppercase}
+  .swatches{display:flex;gap:14px}
+  .sw{width:42px;height:42px;border-radius:50%;border:3px solid #ffffff22;cursor:pointer;transition:transform .2s}
+  .sw:hover{transform:scale(1.14)}
+
+  /* ---------- SECTION HEADERS ---------- */
+  section{padding:88px 0}
+  .sec-head{text-align:center;max-width:620px;margin:0 auto 52px}
+  .eyebrow{font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--coral);margin-bottom:12px}
+  .sec-head h2{font-size:clamp(30px,4vw,46px);font-weight:800}
+  .sec-head p{margin-top:14px;color:var(--ink-soft);font-size:17px}
+
+  /* ---------- PRODUCT GRID ---------- */
+  .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  @media(max-width:900px){.pgrid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:600px){.pgrid{grid-template-columns:1fr}}
+  .card{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:0 10px 30px -20px rgba(43,42,51,.4);transition:transform .3s, box-shadow .3s;display:flex;flex-direction:column}
+  .card:hover{transform:translateY(-8px);box-shadow:var(--shadow)}
+  .card-img{aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;position:relative}
+  .card-img svg{width:64%}
+  .badge{position:absolute;top:16px;left:16px;background:var(--white);color:var(--ink);font-size:12px;font-weight:700;padding:6px 12px;border-radius:999px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+  .card-body{padding:20px 22px 24px}
+  .card-body .ptype{font-size:12px;font-weight:600;color:var(--coral);text-transform:uppercase;letter-spacing:.08em}
+  .card-body h3{font-size:21px;margin:4px 0 6px;font-weight:700}
+  .card-body .desc{font-size:14px;color:var(--ink-soft);min-height:40px}
+  .card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:16px}
+  .price{font-family:'Poppins';font-weight:700;font-size:20px}
+  .dots{display:flex;gap:6px}
+  .pdot{width:16px;height:16px;border-radius:50%;border:2px solid #ffffff;box-shadow:0 0 0 1px #2b2a3322}
+  .sizes{display:flex;gap:7px;margin-top:14px}
+  .size{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border:1.4px solid #2b2a3322;border-radius:10px;font-size:13px;font-weight:600;color:var(--ink-soft)}
+
+  /* ---------- APPLICATION DETAILS ---------- */
+  .appl{background:var(--cream-2)}
+  .agrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media(max-width:850px){.agrid{grid-template-columns:1fr}}
+  .acard{background:var(--white);border-radius:var(--radius);padding:26px;text-align:center;box-shadow:0 10px 30px -22px rgba(43,42,51,.4)}
+  .acard .frame{aspect-ratio:1/1;border-radius:16px;background:var(--cream);display:flex;align-items:center;justify-content:center;margin-bottom:18px;overflow:hidden}
+  .acard h3{font-size:18px;font-weight:700;margin-bottom:6px}
+  .acard p{font-size:14px;color:var(--ink-soft)}
+
+  /* ---------- MANIFESTO ---------- */
+  .manifesto{background:var(--coral);color:var(--cream);text-align:center}
+  .manifesto .big{font-size:clamp(30px,4.6vw,56px);font-weight:800;max-width:900px;margin:0 auto;line-height:1.12}
+  .manifesto .big span{color:var(--sun)}
+  .manifesto .sign{margin-top:30px;font-size:28px}
+
+  /* ---------- SIZE GRADE ---------- */
+  .grade-table{max-width:760px;margin:0 auto;background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:16px 18px;text-align:center;font-size:15px}
+  thead th{background:var(--ink);color:var(--cream);font-family:'Poppins';font-weight:600}
+  tbody tr:nth-child(even){background:var(--cream)}
+  tbody td:first-child{font-weight:700;text-align:left}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--ink);color:var(--cream);padding:64px 0 40px}
+  .foot-grid{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:30px}
+  footer .logo{color:var(--cream)}
+  footer p{color:#fff9;font-size:14px;max-width:300px;margin-top:14px}
+  .foot-cols{display:flex;gap:60px;flex-wrap:wrap}
+  .foot-col h4{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#fff9;margin-bottom:14px}
+  .foot-col a{display:block;color:var(--cream);text-decoration:none;font-size:14px;margin-bottom:9px;opacity:.85}
+  .foot-col a:hover{opacity:1;color:var(--sun)}
+  .foot-bottom{margin-top:46px;border-top:1px solid #ffffff1a;padding-top:22px;font-size:13px;color:#fff8;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  /* reveal animation */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1)}
+  .reveal.in{opacity:1;transform:none}
+  .note{background:var(--cream-2);border-left:4px solid var(--sun);padding:14px 18px;border-radius:10px;font-size:13px;color:var(--ink-soft);max-width:1180px;margin:0 auto 0}
+</style>
+</head>
+<body>
+
+<!-- ============ SVG SYMBOLS (garments + logo mark) ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <!-- logo mark: rounded badge with v -->
+  <symbol id="mark" viewBox="0 0 40 40">
+    <rect x="2" y="2" width="36" height="36" rx="12" fill="currentColor"/>
+    <path d="M12 13 L20 28 L28 13" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="30.5" cy="11.5" r="2.6" fill="#FFD23F"/>
+  </symbol>
+
+  <!-- SCRUB TOP (V-neck) -->
+  <symbol id="scrub-top" viewBox="0 0 220 240">
+    <g class="fabric">
+      <path d="M78 30 L55 40 L22 78 L46 100 L66 80 L66 222 Q66 230 74 230 L146 230 Q154 230 154 222 L154 80 L174 100 L198 78 L165 40 L142 30
+               L130 30 Q110 64 90 30 Z" fill="currentColor"/>
+    </g>
+    <!-- neckline V -->
+    <path d="M88 31 Q110 60 132 31" fill="none" stroke="#00000022" stroke-width="2.5"/>
+    <!-- pocket -->
+    <rect x="98" y="150" width="46" height="50" rx="6" fill="#00000010"/>
+    <!-- seam -->
+    <path d="M110 64 L110 226" stroke="#00000010" stroke-width="2"/>
+    <!-- logo on left chest -->
+    <use href="#mark" x="74" y="78" width="26" height="26" style="color:#ffffff"/>
+  </symbol>
+
+  <!-- SCRUB PANTS (jogger) -->
+  <symbol id="scrub-pants" viewBox="0 0 200 260">
+    <g class="fabric">
+      <path d="M52 14 L148 14 L150 60 L108 250 Q104 256 96 250 L100 120 L92 120 L92 250 Q88 256 84 250 L50 60 Z" fill="currentColor"/>
+    </g>
+    <!-- waistband -->
+    <rect x="50" y="10" width="100" height="20" rx="8" fill="#00000018"/>
+    <path d="M70 30 Q100 44 130 30" fill="none" stroke="#00000018" stroke-width="2.5"/>
+    <!-- side seam / cargo pocket hint -->
+    <rect x="118" y="120" width="26" height="40" rx="5" fill="#00000010"/>
+    <!-- cuff -->
+    <path d="M84 246 L100 250 L100 256 L86 254 Z" fill="#00000018"/>
+    <path d="M116 246 L100 250 L100 256 L114 254 Z" fill="#00000018"/>
+  </symbol>
+
+  <!-- JALECO (lab coat) -->
+  <symbol id="jaleco" viewBox="0 0 240 260">
+    <g class="fabric">
+      <path d="M86 24 L60 34 L24 80 L48 102 L66 84 L66 244 Q66 250 72 250 L168 250 Q174 250 174 244 L174 84 L192 102 L216 80 L180 34 L154 24
+               L150 24 L120 70 L90 24 Z" fill="currentColor"/>
+    </g>
+    <!-- lapels -->
+    <path d="M90 26 L118 96 L120 70 Z" fill="#00000010"/>
+    <path d="M150 26 L122 96 L120 70 Z" fill="#00000010"/>
+    <!-- open front line -->
+    <path d="M120 96 L120 248" stroke="#00000018" stroke-width="2.5"/>
+    <!-- buttons -->
+    <circle cx="112" cy="120" r="3" fill="#0000002a"/>
+    <circle cx="112" cy="150" r="3" fill="#0000002a"/>
+    <circle cx="112" cy="180" r="3" fill="#0000002a"/>
+    <!-- big lower pockets -->
+    <rect x="78" y="180" width="42" height="46" rx="6" fill="#00000010"/>
+    <rect x="150" y="180" width="42" height="46" rx="6" fill="#00000010"/>
+    <!-- chest pocket + logo -->
+    <rect x="138" y="96" width="40" height="34" rx="5" fill="#00000008"/>
+    <use href="#mark" x="144" y="100" width="22" height="22" style="color:var(--coral)"/>
+  </symbol>
+</svg>
+
+<!-- ============ NAV ============ -->
+<nav>
+  <div class="wrap nav-in">
+    <a href="#top" class="logo" aria-label="Vaib">va<span class="dot"></span>b</a>
+    <ul class="nav-links">
+      <li><a href="#colecao">Coleção</a></li>
+      <li><a href="#scrubs">Scrubs</a></li>
+      <li><a href="#jalecos">Jalecos</a></li>
+      <li><a href="#cores">Cores</a></li>
+      <li><a href="#marca">Marca</a></li>
+    </ul>
+    <div class="nav-cta">
+      <button class="pill">Ver coleção</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div class="reveal">
+      <div class="hero-tag"><span></span>Nova marca · Scrubs &amp; Jalecos leves e alegres</div>
+      <h1>Vista a<br>sua <em>vibe.</em></h1>
+      <p>Scrubs e jalecos que respiram, abraçam e levantam o astral do plantão. Leveza no corpo, alegria no jeito de cuidar.</p>
+      <div class="hero-cta">
+        <button class="pill">Explorar a coleção</button>
+        <button class="btn-ghost">Conheça a Vaib</button>
+      </div>
+    </div>
+    <div class="hero-stage reveal">
+      <div class="blob b1"></div>
+      <div class="blob b2"></div>
+      <div class="blob b3"></div>
+      <svg class="garment" viewBox="0 0 220 240" style="color:var(--coral)"><use href="#scrub-top"/></svg>
+      <div class="float-chip fc1"><span class="fc-dot" style="background:var(--mint)"></span>6 cores</div>
+      <div class="float-chip fc2"><span class="fc-dot" style="background:var(--sun)"></span>Tecido que respira</div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ COLOR STRIP ============ -->
+<div class="strip" id="cores">
+  <div class="wrap strip-in">
+    <div class="label">Paleta da estação</div>
+    <div class="swatches">
+      <div class="sw" style="background:#FF6B6B" title="Coral Vaib"></div>
+      <div class="sw" style="background:#FFD23F" title="Sol"></div>
+      <div class="sw" style="background:#34C9B0" title="Menta"></div>
+      <div class="sw" style="background:#5AA9E6" title="Céu"></div>
+      <div class="sw" style="background:#B388EB" title="Lilás"></div>
+      <div class="sw" style="background:#2B2A33" title="Grafite"></div>
+    </div>
+    <div class="label">P · M · G · GG</div>
+  </div>
+</div>
+
+<!-- ============ PRODUCT GRID ============ -->
+<section id="colecao">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">A coleção</div>
+      <h2>Feito pra quem segura o plantão</h2>
+      <p>Três peças essenciais, infinitas combinações. Cada cor disponível na grade completa P, M, G e GG.</p>
+    </div>
+    <div class="pgrid">
+
+      <!-- Card 1: Scrub top -->
+      <div class="card reveal" id="scrubs">
+        <div class="card-img" style="background:linear-gradient(160deg,#FFEFE2,#FFE3D3)">
+          <span class="badge">Best-seller</span>
+          <svg viewBox="0 0 220 240" style="color:var(--coral)"><use href="#scrub-top"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="ptype">Scrub · Top</div>
+          <h3>Blusa Onda</h3>
+          <div class="desc">Decote V, tecido respirável e caimento leve que acompanha o movimento.</div>
+          <div class="card-foot">
+            <div class="price">R$ 169</div>
+            <div class="dots">
+              <span class="pdot" style="background:#FF6B6B"></span>
+              <span class="pdot" style="background:#34C9B0"></span>
+              <span class="pdot" style="background:#5AA9E6"></span>
+              <span class="pdot" style="background:#2B2A33"></span>
+            </div>
+          </div>
+          <div class="sizes"><span class="size">P</span><span class="size">M</span><span class="size">G</span><span class="size">GG</span></div>
+        </div>
+      </div>
+
+      <!-- Card 2: Scrub pants -->
+      <div class="card reveal">
+        <div class="card-img" style="background:linear-gradient(160deg,#E9F7F3,#D9F0EA)">
+          <svg viewBox="0 0 200 260" style="color:var(--mint)"><use href="#scrub-pants"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="ptype">Scrub · Calça</div>
+          <h3>Calça Fluxo</h3>
+          <div class="desc">Modelagem jogger com cintura de conforto e bolso cargo funcional.</div>
+          <div class="card-foot">
+            <div class="price">R$ 189</div>
+            <div class="dots">
+              <span class="pdot" style="background:#FF6B6B"></span>
+              <span class="pdot" style="background:#34C9B0"></span>
+              <span class="pdot" style="background:#B388EB"></span>
+              <span class="pdot" style="background:#2B2A33"></span>
+            </div>
+          </div>
+          <div class="sizes"><span class="size">P</span><span class="size">M</span><span class="size">G</span><span class="size">GG</span></div>
+        </div>
+      </div>
+
+      <!-- Card 3: Jaleco -->
+      <div class="card reveal" id="jalecos">
+        <div class="card-img" style="background:linear-gradient(160deg,#F3EEFB,#EAE0FA)">
+          <span class="badge">Novo</span>
+          <svg viewBox="0 0 240 260" style="color:#FBFBFD"><use href="#jaleco"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="ptype">Jaleco</div>
+          <h3>Jaleco Aura</h3>
+          <div class="desc">Manga longa leve, lapela estruturada e logo bordado no bolso do peito.</div>
+          <div class="card-foot">
+            <div class="price">R$ 249</div>
+            <div class="dots">
+              <span class="pdot" style="background:#FBFBFD"></span>
+              <span class="pdot" style="background:#FFD23F"></span>
+              <span class="pdot" style="background:#5AA9E6"></span>
+              <span class="pdot" style="background:#FF6B6B"></span>
+            </div>
+          </div>
+          <div class="sizes"><span class="size">P</span><span class="size">M</span><span class="size">G</span><span class="size">GG</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ LOGO APPLICATION DETAILS ============ -->
+<section class="appl" id="marca">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Aplicação do logo</div>
+      <h2>Onde a Vaib aparece na peça</h2>
+      <p>O selo Vaib é discreto e consistente — bordado, etiqueta e tag, sempre no mesmo lugar.</p>
+    </div>
+    <div class="agrid">
+      <div class="acard reveal">
+        <div class="frame" style="background:linear-gradient(160deg,#FFEFE2,#FFE3D3)">
+          <svg viewBox="0 0 40 40" width="64" style="color:var(--coral)"><use href="#mark"/></svg>
+        </div>
+        <h3>Bordado no peito</h3>
+        <p>Selo Vaib bordado no lado esquerdo do peito (≈ 2,5 cm), em fio tom-sobre-tom ou contraste alegre.</p>
+      </div>
+      <div class="acard reveal">
+        <div class="frame" style="background:var(--ink);">
+          <span class="logo" style="color:var(--cream);font-size:34px">va<span class="dot"></span>b</span>
+        </div>
+        <h3>Etiqueta de gola</h3>
+        <p>Wordmark aplicado na etiqueta interna da gola, com a grade de tamanho P/M/G/GG.</p>
+      </div>
+      <div class="acard reveal">
+        <div class="frame" style="background:linear-gradient(160deg,#E9F7F3,#D9F0EA)">
+          <div style="display:flex;align-items:center;gap:8px">
+            <svg viewBox="0 0 40 40" width="40" style="color:var(--mint)"><use href="#mark"/></svg>
+            <span style="font-family:'Poppins';font-weight:700;font-size:13px;color:var(--ink)">vibe tag™</span>
+          </div>
+        </div>
+        <h3>Tag de cintura/barra</h3>
+        <p>Etiqueta tecida na barra ou cintura, reforçando a marca sem pesar no visual da peça.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MANIFESTO ============ -->
+<section class="manifesto">
+  <div class="wrap">
+    <p class="eyebrow reveal" style="color:#fff;opacity:.8">Manifesto</p>
+    <h2 class="big reveal">O plantão já é pesado.<br>O seu scrub <span>não precisa ser.</span></h2>
+    <div class="sign script reveal" style="color:#fff">— Vaib. Vista a sua vibe.</div>
+  </div>
+</section>
+
+<!-- ============ SIZE GRADE ============ -->
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Grade têxtil</div>
+      <h2>Tamanhos P · M · G · GG</h2>
+      <p>Grade fixa em todas as peças e cores. Modelagem que abraça sem apertar.</p>
+    </div>
+    <div class="grade-table reveal">
+      <table>
+        <thead>
+          <tr><th>Medida (cm)</th><th>P</th><th>M</th><th>G</th><th>GG</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Busto / Tórax</td><td>88–92</td><td>96–100</td><td>104–108</td><td>112–118</td></tr>
+          <tr><td>Cintura</td><td>70–74</td><td>78–82</td><td>86–90</td><td>94–100</td></tr>
+          <tr><td>Quadril</td><td>94–98</td><td>102–106</td><td>110–114</td><td>118–124</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <span class="logo" style="font-size:34px">va<span class="dot"></span>b</span>
+        <p>Scrubs e jalecos leves e alegres para quem cuida do mundo inteiro.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h4>Loja</h4>
+          <a href="#scrubs">Scrubs</a>
+          <a href="#jalecos">Jalecos</a>
+          <a href="#colecao">Conjuntos</a>
+          <a href="#cores">Cores</a>
+        </div>
+        <div class="foot-col">
+          <h4>Marca</h4>
+          <a href="#marca">Sobre a Vaib</a>
+          <a href="#marca">Manifesto</a>
+          <a href="#">Sustentabilidade</a>
+        </div>
+        <div class="foot-col">
+          <h4>Ajuda</h4>
+          <a href="#">Tabela de medidas</a>
+          <a href="#">Trocas</a>
+          <a href="#">Contato</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Vaib · Conceito de marca — apresentação à diretoria</span>
+      <span>Vista a sua vibe.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{threshold:.14});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{ el.style.transitionDelay=(i%3*0.08)+'s'; io.observe(el); });
+</script>
+</body>
+</html>
