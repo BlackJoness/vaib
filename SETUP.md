@@ -1,4 +1,4 @@
-# ⚙️ SETUP — Rodar o projeto Solê no Cursor AI
+# ⚙️ SETUP — Rodar o projeto Vaib~ no Cursor AI
 
 Abra **este arquivo** no Cursor. Ele orquestra a instalação e a execução de **frontend + backend + banco** num único fluxo.
 
@@ -20,7 +20,7 @@ Abra **este arquivo** no Cursor. Ele orquestra a instalação e a execução de 
 |---|---|
 | Loja (Next.js) | http://localhost:3000 |
 | API (NestJS) | http://localhost:3001 |
-| Dashboard (Vite) | http://localhost:5173 |
+| Dashboard (Next.js) | http://localhost:3002 |
 
 ---
 
@@ -28,7 +28,7 @@ Abra **este arquivo** no Cursor. Ele orquestra a instalação e a execução de 
 
 ```
 Este repositório é um monorepo com 3 aplicações: frontend/ (Next.js), backend/ (NestJS + Prisma)
-e dashboard/ (Vite + React), além de docker-compose.yml (Postgres) e os scripts setup.sh e dev.sh.
+e dashboard/ (Next.js + Shadcn), além de docker-compose.yml (Postgres) e os scripts setup.sh e dev.sh.
 
 Quero rodar tudo localmente. Faça, no terminal integrado, exatamente nesta ordem e me mostrando a saída:
 
@@ -46,7 +46,7 @@ Quero rodar tudo localmente. Faça, no terminal integrado, exatamente nesta orde
 4. Confirme que respondem:
    - Loja:      http://localhost:3000
    - API:       http://localhost:3001/products
-   - Dashboard: http://localhost:5173
+   - Dashboard: http://localhost:3002
 
 Se algum comando falhar, leia o erro, me explique a causa e proponha a correção antes de prosseguir.
 Não altere a lógica de negócio nem a stack; foque em configurar e executar o ambiente existente.

@@ -7,7 +7,7 @@ const COLS = [
   },
   {
     titulo: "Institucional",
-    links: ["Sobre a Solê", "Sustentabilidade", "Trabalhe conosco", "Lojas"],
+    links: ["Sobre a Vaib", "Sustentabilidade", "Trabalhe conosco", "Lojas"],
   },
   {
     titulo: "Minha conta",
@@ -22,8 +22,8 @@ export default function Footer() {
     <footer className="bg-grafite text-creme">
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-6 py-14 md:grid-cols-4 md:px-8">
         <div>
-          <p className="font-display text-2xl font-bold">Solê</p>
-          <p className="mt-2 text-sm text-creme/60">Vista o seu dia de leveza.</p>
+          <p className="font-display text-2xl font-bold">Vaib<span className="text-coral">~</span></p>
+          <p className="mt-2 text-sm text-creme/60">Vista a sua vibe.</p>
         </div>
         {COLS.map((c) => (
           <div key={c.titulo}>
@@ -44,7 +44,7 @@ export default function Footer() {
       </div>
       <div className="border-t border-creme/10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 text-xs text-creme/50 md:flex-row md:px-8">
-          <span>© {new Date().getFullYear()} Solê. Todos os direitos reservados.</span>
+          <span>© {new Date().getFullYear()} Vaib. Todos os direitos reservados.</span>
           <div className="flex gap-2">
             {PAGAMENTOS.map((p) => (
               <span

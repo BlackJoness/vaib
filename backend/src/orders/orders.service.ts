@@ -19,6 +19,21 @@ type ItemData = {
 export class OrdersService {
   constructor(private prisma: PrismaService) {}
 
+  // Lista pedidos (mais recentes primeiro) com itens, variante e produto.
+  // Alimenta a tabela de gestão de pedidos do dashboard.
+  findAll() {
+    return this.prisma.order.findMany({
+      orderBy: { createdAt: "desc" },
+      include: {
+        items: {
+          include: {
+            variant: { include: { product: true } },
+          },
+        },
+      },
+    });
+  }
+
   // Cria pedido: baixa estoque de forma segura (sem oversell) e nasce
   // "Aguardando Pagamento". Tudo numa única transação.
   async create(dto: CreateOrderDto) {

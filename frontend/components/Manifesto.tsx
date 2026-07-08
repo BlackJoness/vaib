@@ -7,7 +7,7 @@ export default function Manifesto() {
         <Reveal>
           <p className="font-display text-2xl font-semibold leading-snug text-grafite md:text-4xl md:leading-snug">
             Salvar o dia já é trabalho demais. A roupa devia ser a parte fácil.
-            <span className="text-coral"> Vista o seu dia de leveza.</span>
+            <span className="text-coral"> Vista a sua vibe.</span>
           </p>
         </Reveal>
       </div>

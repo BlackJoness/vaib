@@ -32,3 +32,23 @@ export async function getProductBySlug(
     return null;
   }
 }
+
+// Finaliza o pedido na API (status inicial: "Aguardando Pagamento").
+export type CreateOrderPayload = {
+  clienteNome: string;
+  clienteEmail: string;
+  items: { variantId: string; quantidade: number }[];
+};
+
+export async function createOrder(payload: CreateOrderPayload) {
+  const res = await fetch(`${API_URL}/orders`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    const msg = await res.text();
+    throw new Error(msg || "Falha ao criar pedido");
+  }
+  return res.json();
+}

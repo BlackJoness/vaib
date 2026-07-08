@@ -1,8 +1,8 @@
 {
-  "name": "sole-frontend",
+  "name": "vaib-frontend",
   "version": "0.1.0",
   "private": true,
-  "description": "Solê — Loja (Next.js + Tailwind + Framer Motion)",
+  "description": "Vaib — Loja (Next.js + Tailwind + Framer Motion)",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

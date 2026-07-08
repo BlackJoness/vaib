@@ -39,7 +39,7 @@ async function main() {
 
     for (const c of CORES) {
       for (const t of TAMANHOS) {
-        const sku = `SOLE-${m.cod}-${c.cod}-${t}`;
+        const sku = `VAIB-${m.cod}-${c.cod}-${t}`;
         await prisma.variant.upsert({
           where: { sku },
           update: {},

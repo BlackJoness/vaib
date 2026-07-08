@@ -4,6 +4,8 @@ import "./globals.css";
 import TopBar from "@/components/TopBar";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import CartDrawer from "@/components/CartDrawer";
+import { CartProvider } from "@/lib/cart";
 
 // Tipografia do Brandbook — variáveis consumidas pelo tailwind.config.ts
 const poppins = Poppins({
@@ -18,7 +20,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Solê — Vista o seu dia de leveza",
+  title: "Vaib~ — Vista a sua vibe",
   description: "Scrubs leves e alegres.",
 };
 
@@ -30,10 +32,13 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${poppins.variable} ${inter.variable}`}>
       <body className="bg-creme font-sans text-grafite">
-        <TopBar />
-        <Navbar />
-        {children}
-        <Footer />
+        <CartProvider>
+          <TopBar />
+          <Navbar />
+          {children}
+          <Footer />
+          <CartDrawer />
+        </CartProvider>
       </body>
     </html>
   );

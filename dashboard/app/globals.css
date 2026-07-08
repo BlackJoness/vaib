@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 33 100% 97%; /* Creme Algodão #FFF8F0 */
+    --foreground: 252 9% 22%; /* Grafite Suave #33303E */
+
+    --card: 0 0% 100%;
+    --card-foreground: 252 9% 22%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 252 9% 22%;
+
+    --primary: 9 100% 70%; /* Coral Sol #FF7E67 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 40 100% 92%;
+    --secondary-foreground: 252 9% 22%;
+
+    --muted: 33 60% 94%;
+    --muted-foreground: 252 9% 45%;
+
+    --accent: 162 52% 67%; /* Verde Brisa */
+    --accent-foreground: 252 9% 22%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 252 9% 22% / 0.12;
+    --input: 252 9% 22% / 0.18;
+    --ring: 9 100% 70%;
+
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    margin: 0;
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-inter), Inter, system-ui, sans-serif;
+  }
+}

@@ -1,4 +1,4 @@
-// Solê — Prisma Schema (PostgreSQL / Supabase)
+// Vaib — Prisma Schema (PostgreSQL / Supabase)
 // Produto genérico × Variantes (cor+tamanho) com estoque individual.
 
 generator client {
@@ -39,7 +39,7 @@ model Product {
 
 model Variant {
   id         String      @id @default(cuid())
-  sku        String      @unique // SOLE-BRISA-COR-P
+  sku        String      @unique // VAIB-BRISA-COR-P
   cor        String // "Coral Sol"
   corHex     String // "#FF7E67"
   tamanho    Tamanho // P | M | G | GG

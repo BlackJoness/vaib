@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Solê — sobe os 3 serviços de desenvolvimento ao mesmo tempo
+# Vaib~ — sobe os 3 serviços de desenvolvimento ao mesmo tempo
 # Uso: bash dev.sh   (Ctrl+C encerra todos)
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
@@ -13,5 +13,5 @@ trap cleanup EXIT INT TERM
 ( cd "$ROOT/frontend"  && npm run dev ) &
 ( cd "$ROOT/dashboard" && npm run dev ) &
 
-echo "API → http://localhost:3001 | Loja → http://localhost:3000 | Admin → http://localhost:5173"
+echo "API → http://localhost:3001 | Loja → http://localhost:3000 | Admin → http://localhost:3002"
 wait

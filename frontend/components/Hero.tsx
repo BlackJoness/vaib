@@ -29,7 +29,7 @@ export default function Hero() {
           variants={fadeUp}
           className="max-w-2xl font-display text-5xl font-bold leading-tight text-creme md:text-7xl"
         >
-          Vista o seu dia de leveza.
+          Vista a sua vibe.
         </motion.h1>
         <motion.a
           variants={fadeUp}

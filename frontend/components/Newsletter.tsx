@@ -9,7 +9,7 @@ export default function Newsletter() {
     <section className="bg-ameixa text-creme">
       <div className="mx-auto max-w-3xl px-6 py-16 text-center md:px-8">
         <h2 className="font-display text-2xl font-bold md:text-3xl">
-          Entre para a Solê
+          Entre para a Vaib
         </h2>
         <p className="mt-2 text-creme/80">
           Receba lançamentos e 10% na primeira compra.

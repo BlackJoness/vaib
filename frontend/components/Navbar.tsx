@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { useCart } from "@/lib/cart";
 
 const LINKS = [
   { label: "Feminino", href: "/feminino" },
@@ -30,6 +31,7 @@ function Icon({ d }: { d: string }) {
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const { count, openCart } = useCart();
   return (
     <header className="sticky top-0 z-50 border-b border-grafite/10 bg-creme/90 backdrop-blur">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-8">
@@ -47,7 +49,7 @@ export default function Navbar() {
           href="/"
           className="font-display text-2xl font-bold tracking-tight text-grafite"
         >
-          Solê
+          Vaib<span className="text-coral">~</span>
         </Link>
 
         {/* Links (desktop) */}
@@ -72,10 +74,14 @@ export default function Navbar() {
           <button aria-label="Favoritos" className="hidden hover:text-coral sm:block">
             <Icon d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z" />
           </button>
-          <button aria-label="Sacola" className="relative hover:text-coral">
+          <button
+            aria-label="Sacola"
+            onClick={openCart}
+            className="relative hover:text-coral"
+          >
             <Icon d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0" />
             <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-coral text-[10px] font-bold text-white">
-              0
+              {count}
             </span>
           </button>
         </div>
