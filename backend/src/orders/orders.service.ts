@@ -67,7 +67,9 @@ export class OrdersService {
     });
   }
 
-  // Avança status respeitando a máquina de estados
+  // Avança status respeitando a máquina de estados.
+  // A atualização só acontece se o status ainda for o que foi lido:
+  // dois cliques simultâneos não avançam o pedido duas vezes.
   async advanceStatus(orderId: string) {
     const order = await this.prisma.order.findUnique({
       where: { id: orderId },
@@ -80,9 +82,16 @@ export class OrdersService {
         `Pedido já está em "${order.status}" (estado final)`,
       );
     }
-    return this.prisma.order.update({
-      where: { id: orderId },
+
+    const { count } = await this.prisma.order.updateMany({
+      where: { id: orderId, status: order.status },
       data: { status: proximo },
     });
+    if (count === 0) {
+      throw new ConflictException(
+        "O status do pedido mudou durante a operação. Recarregue e tente de novo.",
+      );
+    }
+    return { ...order, status: proximo };
   }
 }

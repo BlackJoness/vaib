@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { apiGet, NaoAutorizadoError } from "../src/api";
 
 type Kpis = {
   produtoMaisVendido: { nome: string; unidades: number } | null;
@@ -11,27 +12,21 @@ type Kpis = {
   }[];
 };
 
-const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3001";
-
 function Card({ children }: { children: React.ReactNode }) {
   return (
     <div className="rounded-xl2 bg-white p-5 shadow-soft">{children}</div>
   );
 }
 
-export default function KpiCards() {
+export default function KpiCards({ onSessaoExpirada }: { onSessaoExpirada: () => void }) {
   const [kpis, setKpis] = useState<Kpis | null>(null);
   const [erro, setErro] = useState(false);
 
   useEffect(() => {
-    fetch(`${API_URL}/dashboard/kpis`)
-      .then((r) => {
-        if (!r.ok) throw new Error("falha");
-        return r.json();
-      })
+    apiGet<Kpis>("/dashboard/kpis")
       .then(setKpis)
-      .catch(() => setErro(true));
-  }, []);
+      .catch((e) => (e instanceof NaoAutorizadoError ? onSessaoExpirada() : setErro(true)));
+  }, [onSessaoExpirada]);
 
   if (erro) return <p className="text-grafite/60">Não foi possível carregar os KPIs.</p>;
   if (!kpis) return <p className="text-grafite/60">Carregando KPIs…</p>;
