@@ -1,4 +1,4 @@
-// Solê — Prisma Schema (PostgreSQL / Supabase)
+// vaib — Prisma Schema (PostgreSQL / Supabase)
 // Produto genérico × Variantes (cor+tamanho) com estoque individual.
 
 generator client {

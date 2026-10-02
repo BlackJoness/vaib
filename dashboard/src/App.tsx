@@ -1,10 +1,19 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import KpiCards from "../components/KpiCards";
 import LoginForm from "../components/LoginForm";
-import { sessao } from "./api";
+import { getLoja, sessao } from "./api";
 
 export default function App() {
   const [logado, setLogado] = useState(() => Boolean(sessao.token()));
+  const [nomeLoja, setNomeLoja] = useState<string | null>(null);
+
+  useEffect(() => {
+    getLoja().then((loja) => {
+      if (!loja) return;
+      setNomeLoja(loja.nome);
+      document.title = `${loja.nome} · Dashboard`;
+    });
+  }, []);
 
   const sair = useCallback(() => {
     sessao.limpar();
@@ -17,7 +26,9 @@ export default function App() {
     <div className="mx-auto max-w-5xl p-8">
       <header className="mb-8 flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-grafite">Solê · Dashboard</h1>
+          <h1 className="text-2xl font-bold text-grafite">
+            {nomeLoja ? `${nomeLoja} · Dashboard` : "Dashboard"}
+          </h1>
           <p className="text-grafite/60">Gestão de produtos e pedidos</p>
         </div>
         <button onClick={sair} className="text-sm text-grafite/60 underline">

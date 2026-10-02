@@ -5,7 +5,12 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        coral: { DEFAULT: "#FF7E67", 600: "#F2654D" },
+        // Acento vem do store.config.ts (CSS variables aplicadas no <html>).
+        // Canais RGB separados para que `bg-coral/12` continue funcionando.
+        coral: {
+          DEFAULT: "rgb(var(--accent) / <alpha-value>)",
+          600: "rgb(var(--accent-strong) / <alpha-value>)",
+        },
         manha: "#FFC857",
         brisa: "#7FD8BE",
         sereno: "#8EC5E8",
