@@ -22,3 +22,6 @@ build/
 .DS_Store
 *.log
 npm-debug.log*
+
+# TypeScript incremental
+*.tsbuildinfo

@@ -6,7 +6,7 @@ export interface Variant {
   cor: string;
   corHex: string;
   tamanho: Tamanho;
-  estoque: number;
+  disponivel: boolean; // a API não expõe o estoque exato
   preco: string; // Prisma Decimal serializa como string
 }
 

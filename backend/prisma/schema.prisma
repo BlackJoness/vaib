@@ -78,3 +78,13 @@ model OrderItem {
   quantidade    Int
   precoUnitario Decimal @db.Decimal(10, 2)
 }
+
+// Usuário administrativo do dashboard. Não há cadastro público:
+// o primeiro admin é criado pelo seed a partir de ADMIN_EMAIL e ADMIN_PASSWORD.
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  senhaHash String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

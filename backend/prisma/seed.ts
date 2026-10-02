@@ -1,4 +1,5 @@
 import { PrismaClient, Tamanho } from "@prisma/client";
+import * as bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
@@ -24,7 +25,36 @@ const MODELOS = [
   { cod: "AURA", slug: "jaleco-aura", nome: "Jaleco Aura", preco: 219.9 },
 ];
 
+// Estoque de demonstração determinístico (0 a 24): o mesmo seed gera
+// sempre o mesmo catálogo, o que deixa demo e testes reproduzíveis.
+function estoqueDemo(sku: string): number {
+  let h = 0;
+  for (const ch of sku) h = (h * 31 + ch.charCodeAt(0)) % 1000;
+  return h % 25;
+}
+
+// Cria o primeiro admin a partir do ambiente. Não existe cadastro público.
+// Se o admin já existir, a senha NÃO é sobrescrita.
+async function seedAdmin() {
+  const email = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+  const senha = process.env.ADMIN_PASSWORD;
+  if (!email || !senha) {
+    console.log("ADMIN_EMAIL/ADMIN_PASSWORD ausentes: nenhum admin criado.");
+    return;
+  }
+  if (senha.length < 12) {
+    throw new Error("ADMIN_PASSWORD precisa ter ao menos 12 caracteres.");
+  }
+  await prisma.adminUser.upsert({
+    where: { email },
+    update: {},
+    create: { email, senhaHash: await bcrypt.hash(senha, 12) },
+  });
+  console.log(`Admin garantido: ${email}`);
+}
+
 async function main() {
+  await seedAdmin();
   for (const m of MODELOS) {
     const product = await prisma.product.upsert({
       where: { slug: m.slug },
@@ -48,7 +78,7 @@ async function main() {
             cor: c.nome,
             corHex: c.hex,
             tamanho: t,
-            estoque: Math.floor(Math.random() * 25), // estoque demo
+            estoque: estoqueDemo(sku),
             preco: m.preco,
             productId: product.id,
           },
