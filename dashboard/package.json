@@ -2,11 +2,12 @@
   "name": "sole-dashboard",
   "version": "0.1.0",
   "private": true,
-  "description": "Solê — Dashboard de gestão (React + Vite + Tailwind)",
+  "description": "vaib — Dashboard de gestão (React + Vite + Tailwind)",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "check:brand": "sh scripts/check-brand.sh"
   },
   "dependencies": {
     "react": "19.1.9",

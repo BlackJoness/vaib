@@ -4,7 +4,7 @@
 // Some ao fechar a aba e expira em 1h no servidor. É um painel interno
 // sem conteúdo de terceiros, o que reduz o risco de XSS que roubaria o token.
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3001";
-const CHAVE_TOKEN = "sole.admin.token";
+const CHAVE_TOKEN = "vaib.admin.token";
 
 export class NaoAutorizadoError extends Error {}
 
@@ -38,4 +38,22 @@ export async function apiGet<T>(caminho: string): Promise<T> {
   }
   if (!r.ok) throw new Error(`Falha ${r.status}`);
   return (await r.json()) as T;
+}
+
+// Identidade da loja (nome e contatos). Rota pública: usada no cabeçalho
+// antes mesmo do login. Em falha, o painel mostra só "Dashboard".
+export interface LojaInfo {
+  nome: string;
+  whatsapp: string | null;
+  email: string | null;
+}
+
+export async function getLoja(): Promise<LojaInfo | null> {
+  try {
+    const r = await fetch(`${API_URL}/store`);
+    if (!r.ok) return null;
+    return (await r.json()) as LojaInfo;
+  } catch {
+    return null;
+  }
 }

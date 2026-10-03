@@ -2,14 +2,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { storeConfig } from "@/store.config";
 
-const LINKS = [
-  { label: "Feminino", href: "/feminino" },
-  { label: "Masculino", href: "/masculino" },
-  { label: "Jalecos", href: "/jalecos" },
-  { label: "Kits", href: "/kits" },
-  { label: "Sobre", href: "/sobre" },
-];
+const LINKS = storeConfig.nav;
 
 function Icon({ d }: { d: string }) {
   return (
@@ -47,7 +42,7 @@ export default function Navbar() {
           href="/"
           className="font-display text-2xl font-bold tracking-tight text-grafite"
         >
-          Solê
+          {storeConfig.brand.name}
         </Link>
 
         {/* Links (desktop) */}

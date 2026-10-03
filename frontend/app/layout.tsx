@@ -4,6 +4,13 @@ import "./globals.css";
 import TopBar from "@/components/TopBar";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { storeConfig } from "@/store.config";
+import { validateStoreConfig } from "@/lib/store-config.schema";
+import { themeStyle } from "@/lib/theme";
+
+// Valida a identidade da loja no servidor. Roda no `next build`:
+// configuração inválida derruba o build, não a loja em produção.
+const store = validateStoreConfig(storeConfig);
 
 // Tipografia do Brandbook — variáveis consumidas pelo tailwind.config.ts
 const poppins = Poppins({
@@ -18,8 +25,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Solê — Vista o seu dia de leveza",
-  description: "Scrubs leves e alegres.",
+  title: store.seo.title,
+  description: store.seo.description,
 };
 
 export default function RootLayout({
@@ -28,7 +35,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className={`${poppins.variable} ${inter.variable}`}>
+    <html
+      lang={store.seo.locale}
+      className={`${poppins.variable} ${inter.variable}`}
+      style={themeStyle(store.theme)}
+    >
       <body className="bg-creme font-sans text-grafite">
         <TopBar />
         <Navbar />

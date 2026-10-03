@@ -34,5 +34,5 @@ export async function criarApp(prisma: PrismaMock): Promise<INestApplication> {
 }
 
 export function tokenAdmin(app: INestApplication, overrides: Record<string, unknown> = {}) {
-  return app.get(JwtService).sign({ sub: "admin-1", email: "admin@sole.dev", role: "admin", ...overrides });
+  return app.get(JwtService).sign({ sub: "admin-1", email: "admin@loja.dev", role: "admin", ...overrides });
 }

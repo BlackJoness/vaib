@@ -74,23 +74,23 @@ describe("Segurança HTTP", () => {
   describe("login", () => {
     it("credenciais corretas devolvem um token aceito nas rotas de admin", async () => {
       prisma.adminUser.findUnique.mockResolvedValue({
-        id: "a1", email: "admin@sole.dev", senhaHash: await bcrypt.hash("senha-forte-123", 4),
+        id: "a1", email: "admin@loja.dev", senhaHash: await bcrypt.hash("senha-forte-123", 4),
       });
       const r = await request(app.getHttpServer())
-        .post("/auth/login").send({ email: "Admin@Sole.dev ", senha: "senha-forte-123" }).expect(200);
+        .post("/auth/login").send({ email: "Admin@Loja.dev ", senha: "senha-forte-123" }).expect(200);
       await request(app.getHttpServer())
         .get("/dashboard/kpis").set("Authorization", `Bearer ${r.body.accessToken}`).expect(200);
     });
 
     it("senha errada e e-mail inexistente devolvem a mesma resposta", async () => {
       prisma.adminUser.findUnique.mockResolvedValueOnce({
-        id: "a1", email: "admin@sole.dev", senhaHash: await bcrypt.hash("senha-forte-123", 4),
+        id: "a1", email: "admin@loja.dev", senhaHash: await bcrypt.hash("senha-forte-123", 4),
       });
       const errada = await request(app.getHttpServer())
-        .post("/auth/login").send({ email: "admin@sole.dev", senha: "errada" }).expect(401);
+        .post("/auth/login").send({ email: "admin@loja.dev", senha: "errada" }).expect(401);
       prisma.adminUser.findUnique.mockResolvedValueOnce(null);
       const inexistente = await request(app.getHttpServer())
-        .post("/auth/login").send({ email: "ninguem@sole.dev", senha: "errada" }).expect(401);
+        .post("/auth/login").send({ email: "ninguem@loja.dev", senha: "errada" }).expect(401);
       expect(errada.body.message).toBe(inexistente.body.message);
     });
 

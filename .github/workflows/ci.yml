@@ -53,6 +53,8 @@ jobs:
       - run: npm ci
       - run: npx tsc --noEmit
       - run: npm run lint
+      - name: Nome de marca só em store.config.ts
+        run: npm run check:brand
       - run: npm run build
       - run: npm audit --omit=dev --audit-level=high
 
@@ -71,5 +73,7 @@ jobs:
           cache-dependency-path: dashboard/package-lock.json
       - run: npm ci
       - run: npx tsc --noEmit
+      - name: Nome de marca vem da API, não do código
+        run: npm run check:brand
       - run: npm run build
       - run: npm audit --omit=dev --audit-level=high

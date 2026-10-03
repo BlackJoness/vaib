@@ -10,6 +10,7 @@ import { HealthController } from "./health/health.controller";
 import { OrdersModule } from "./orders/orders.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { ProductsModule } from "./products/products.module";
+import { StoreModule } from "./store/store.module";
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ProductsModule } from "./products/products.module";
     ProductsModule,
     OrdersModule,
     DashboardModule,
+    StoreModule,
   ],
   controllers: [HealthController],
   // Ordem importa: o limite de requisições roda antes da checagem do token,
