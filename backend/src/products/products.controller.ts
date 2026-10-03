@@ -13,6 +13,12 @@ export class ProductsController {
     return this.products.findAll();
   }
 
+  // Declarada antes de ":slug" para não ser capturada por ela.
+  @Get("destaque")
+  destaque() {
+    return this.products.findDestaque();
+  }
+
   @Get(":slug")
   findOne(@Param("slug") slug: string) {
     return this.products.findBySlug(slug);

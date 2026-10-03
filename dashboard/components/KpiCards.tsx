@@ -6,8 +6,7 @@ type Kpis = {
   alertasEstoqueBaixo: {
     sku: string;
     produto: string;
-    cor: string;
-    tamanho: "P" | "M" | "G" | "GG";
+    variante: string; // "Casa completa · 15 dias"
     estoque: number;
   }[];
 };
@@ -51,7 +50,7 @@ export default function KpiCards({ onSessaoExpirada }: { onSessaoExpirada: () =>
 
       <Card>
         <h2 className="mb-2 text-sm font-medium text-grafite/60">
-          Estoque baixo (por tamanho)
+          Estoque baixo (por variante)
         </h2>
         {kpis.alertasEstoqueBaixo.length === 0 ? (
           <p className="text-grafite/60">Estoque saudável</p>
@@ -63,7 +62,7 @@ export default function KpiCards({ onSessaoExpirada }: { onSessaoExpirada: () =>
                 className="flex items-center justify-between text-sm"
               >
                 <span>
-                  {a.produto} · {a.cor} · <strong>{a.tamanho}</strong>
+                  {a.produto}{a.variante && <> · <strong>{a.variante}</strong></>}
                 </span>
                 <span className="rounded-full bg-coral/15 px-2 py-0.5 font-semibold text-coral">
                   {a.estoque} restantes

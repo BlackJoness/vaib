@@ -1,14 +1,22 @@
 import { OrderStatus } from "@prisma/client";
 
-// Rótulos exibidos (restrição do projeto)
+// Rótulos exibidos no dashboard
 export const STATUS_LABEL: Record<OrderStatus, string> = {
-  AGUARDANDO_PAGAMENTO: "Aguardando Pagamento",
-  EM_SEPARACAO: "Em Separação",
-  ENVIADO: "Enviado",
+  NOVO: "Novo",
+  EM_CONTATO: "Em contato",
+  CONFIRMADO: "Confirmado",
+  CONCLUIDO: "Concluído",
+  CANCELADO: "Cancelado",
 };
 
-// Transições válidas (avanço linear, sem pulos nem retrocesso)
+// Avanço linear, sem pulos nem retrocesso. Estados finais não têm próximo.
 export const NEXT_STATUS: Partial<Record<OrderStatus, OrderStatus>> = {
-  AGUARDANDO_PAGAMENTO: OrderStatus.EM_SEPARACAO,
-  EM_SEPARACAO: OrderStatus.ENVIADO,
+  NOVO: OrderStatus.EM_CONTATO,
+  EM_CONTATO: OrderStatus.CONFIRMADO,
+  CONFIRMADO: OrderStatus.CONCLUIDO,
 };
+
+export const STATUS_FINAIS: ReadonlySet<OrderStatus> = new Set([
+  OrderStatus.CONCLUIDO,
+  OrderStatus.CANCELADO,
+]);
