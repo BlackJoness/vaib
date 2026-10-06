@@ -1,6 +1,6 @@
 import type { Product } from "./types";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
+export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
 
 /**
  * Chamadas à API NestJS com cache leve (ISR, 60 s). Em falha de rede ou
