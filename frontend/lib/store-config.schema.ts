@@ -12,6 +12,20 @@
  * de 40 linhas evita uma dependência no caminho do cliente.
  */
 
+/** Seções da home, na ordem em que aparecem. Cada chave tem um componente em lib/sections.ts. */
+export const SECTION_KEYS = [
+  "hero",
+  "showcase",
+  "beneficios",
+  "comoFunciona",
+  "oferta",
+  "provaSocial",
+  "faq",
+  "ctaFinal",
+  "newsletter",
+] as const;
+export type SectionKey = (typeof SECTION_KEYS)[number];
+
 export interface StoreLink {
   label: string;
   href: string;
@@ -47,6 +61,8 @@ export interface StoreConfig {
     /** Tema na primeira visita. "system" segue o sistema operacional. */
     defaultMode: "light" | "dark" | "system";
   };
+  /** Ordem das seções da home. Tirar uma chave esconde a seção. */
+  sections: SectionKey[];
   /** Avisos da barra do topo. Vazio esconde a barra. */
   announcements: string[];
   nav: StoreLink[];
@@ -98,6 +114,11 @@ export function validateStoreConfig(c: StoreConfig): StoreConfig {
     erros.push('theme.defaultMode: "light", "dark" ou "system"');
   }
 
+  if (c.sections.length === 0) erros.push("sections: precisa de ao menos 1 seção");
+  if (new Set(c.sections).size !== c.sections.length) erros.push("sections: há seção repetida");
+  c.sections.forEach((s) => {
+    if (!(SECTION_KEYS as readonly string[]).includes(s)) erros.push(`sections: "${s}" não existe`);
+  });
   if (c.announcements.length > 6) erros.push("announcements: no máximo 6 avisos");
   if (c.nav.length > 8) erros.push("nav: no máximo 8 links");
   if (c.footer.columns.length > 4) erros.push("footer.columns: no máximo 4 colunas");

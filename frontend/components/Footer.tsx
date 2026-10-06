@@ -12,7 +12,7 @@ export default function Footer() {
         </div>
         {footer.columns.map((c) => (
           <div key={c.title}>
-            <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted">
+            <h3 className="mb-3 text-sm font-semibold text-fg">
               {c.title}
             </h3>
             <ul className="space-y-2">

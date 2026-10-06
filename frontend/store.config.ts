@@ -34,49 +34,34 @@ export const storeConfig = {
     accentDarkStrong: "#EDB48A",
     defaultMode: "system",
   },
-  announcements: [
-    "Frete grátis acima de R$ 279",
-    "5% off no Pix",
-    "Até 4x sem juros",
-    "10% na primeira compra: BEMVINDO",
-  ],
+  // A home é uma landing de um produto: a nav e o rodapé apontam para as seções.
+  sections: ["hero", "showcase", "beneficios", "comoFunciona", "oferta", "provaSocial", "faq", "ctaFinal"],
+  announcements: ["Orçamento fechado antes de começar", "Atendimento 100% remoto", "Plano express em 15 dias"],
   nav: [
-    { label: "Feminino", href: "/feminino" },
-    { label: "Masculino", href: "/masculino" },
-    { label: "Jalecos", href: "/jalecos" },
-    { label: "Kits", href: "/kits" },
-    { label: "Sobre", href: "/sobre" },
+    { label: "Projeto", href: "#showcase" },
+    { label: "Como funciona", href: "#como-funciona" },
+    { label: "Oferta", href: "#oferta" },
+    { label: "Dúvidas", href: "#faq" },
   ],
   footer: {
     columns: [
       {
+        title: "Nesta página",
+        links: [
+          { label: "O projeto", href: "#showcase" },
+          { label: "Como funciona", href: "#como-funciona" },
+          { label: "Oferta", href: "#oferta" },
+        ],
+      },
+      {
         title: "Ajuda",
         links: [
-          { label: "Trocas e devoluções", href: "#" },
-          { label: "Entrega e frete", href: "#" },
-          { label: "Guia de tamanhos", href: "#" },
-          { label: "Fale conosco", href: "#" },
-        ],
-      },
-      {
-        title: "Institucional",
-        links: [
-          { label: "Sobre a marca", href: "#" },
-          { label: "Sustentabilidade", href: "#" },
-          { label: "Trabalhe conosco", href: "#" },
-          { label: "Lojas", href: "#" },
-        ],
-      },
-      {
-        title: "Minha conta",
-        links: [
-          { label: "Entrar", href: "#" },
-          { label: "Meus pedidos", href: "#" },
-          { label: "Favoritos", href: "#" },
+          { label: "Dúvidas frequentes", href: "#faq" },
+          { label: "Fale conosco", href: "#contato" },
         ],
       },
     ],
-    payments: ["Visa", "Master", "Elo", "Amex", "Pix"],
+    payments: ["Pix", "Cartão", "Boleto"],
   },
   newsletter: {
     title: "Entre para o clube",

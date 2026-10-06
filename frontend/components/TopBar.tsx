@@ -1,17 +1,13 @@
 import { storeConfig } from "@/store.config";
+import Marquee from "@/components/ui/Marquee";
 
-// Barra de avisos no topo (frete, pix, parcelamento). Some se não houver avisos.
+// Avisos do topo, em faixa contínua. Some se não houver avisos.
 export default function TopBar() {
   const avisos = storeConfig.announcements;
   if (avisos.length === 0) return null;
-
   return (
-    <div className="border-b border-fg/10 bg-accent/10 text-muted">
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-6 gap-y-1 px-4 py-2 text-center text-xs font-medium">
-        {avisos.map((a) => (
-          <span key={a}>{a}</span>
-        ))}
-      </div>
+    <div className="border-b border-fg/10 py-2 text-xs text-muted">
+      <Marquee items={avisos} duration={40} />
     </div>
   );
 }
