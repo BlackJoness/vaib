@@ -1,27 +1,26 @@
 import type { Metadata } from "next";
-import { Poppins, Inter } from "next/font/google";
+import { Geist, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import TopBar from "@/components/TopBar";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import { storeConfig } from "@/store.config";
 import { validateStoreConfig } from "@/lib/store-config.schema";
-import { themeStyle } from "@/lib/theme";
+import { serverTheme, themeInitScript, themeStyle } from "@/lib/theme";
 
 // Valida a identidade da loja no servidor. Roda no `next build`:
 // configuração inválida derruba o build, não a loja em produção.
 const store = validateStoreConfig(storeConfig);
 
-// Tipografia do Brandbook — variáveis consumidas pelo tailwind.config.ts
-const poppins = Poppins({
+// Geist para texto e títulos; Instrument Serif itálica só para ênfase.
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
+const instrument = Instrument_Serif({
   subsets: ["latin"],
-  weight: ["600", "700"],
-  variable: "--font-poppins",
-});
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-inter",
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-instrument",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -29,22 +28,28 @@ export const metadata: Metadata = {
   description: store.seo.description,
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const inicial = serverTheme(store.theme);
   return (
+    // suppressHydrationWarning: o script abaixo pode trocar data-theme antes
+    // da hidratação; a diferença é esperada e só nesse atributo.
     <html
       lang={store.seo.locale}
-      className={`${poppins.variable} ${inter.variable}`}
+      data-theme={inicial}
+      className={`${geist.variable} ${instrument.variable}`}
       style={themeStyle(store.theme)}
+      suppressHydrationWarning
     >
-      <body className="bg-creme font-sans text-grafite">
-        <TopBar />
-        <Navbar />
-        {children}
-        <Footer />
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript(store.theme.defaultMode) }} />
+      </head>
+      <body className="font-sans text-fg">
+        <ThemeProvider initial={inicial}>
+          <TopBar />
+          <Navbar />
+          {children}
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

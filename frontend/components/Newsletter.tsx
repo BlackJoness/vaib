@@ -8,12 +8,12 @@ export default function Newsletter() {
   const texto = storeConfig.newsletter;
 
   return (
-    <section className="bg-ameixa text-creme">
-      <div className="mx-auto max-w-3xl px-6 py-16 text-center md:px-8">
-        <h2 className="font-display text-2xl font-bold md:text-3xl">
+    <section className="px-6 py-16 md:px-8">
+      <div className="glass-2 mx-auto max-w-3xl rounded-panel px-6 py-14 text-center md:px-12">
+        <h2 className="font-display text-2xl font-semibold tracking-display md:text-3xl">
           {texto.title}
         </h2>
-        <p className="mt-2 text-creme/80">{texto.subtitle}</p>
+        <p className="mt-2 text-muted">{texto.subtitle}</p>
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -27,17 +27,17 @@ export default function Newsletter() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="seu@email.com"
-            className="flex-1 rounded-xl2 px-4 py-3 text-grafite outline-none"
+            className="flex-1 rounded-full border border-fg/15 bg-canvas/70 px-5 py-3 text-fg placeholder:text-muted"
           />
           <button
             type="submit"
-            className="rounded-xl2 bg-coral px-6 py-3 font-semibold text-white transition-transform hover:scale-[1.03]"
+            className="rounded-full bg-accent px-6 py-3 font-semibold text-on-accent transition-transform hover:scale-[1.03]"
           >
             {texto.cta}
           </button>
         </form>
         {ok && (
-          <p className="mt-3 text-sm text-manha">{texto.success}</p>
+          <p className="mt-3 text-sm text-accent">{texto.success}</p>
         )}
       </div>
     </section>

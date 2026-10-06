@@ -38,7 +38,7 @@ export default function OptionSelector({
     <div className="space-y-5">
       {produto.options.map((o) => (
         <fieldset key={o.key}>
-          <legend className="mb-2 text-sm font-semibold uppercase tracking-wide text-grafite/70">
+          <legend className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted">
             {o.label}
           </legend>
           <div className="flex flex-wrap gap-2">
@@ -52,7 +52,7 @@ export default function OptionSelector({
                   aria-pressed={ativo}
                   onClick={() => escolher(o.key, v.value)}
                   className={`rounded-xl2 border px-4 py-2 font-sans font-semibold transition-colors
-                    ${ativo ? "border-coral bg-coral text-white" : "border-grafite/20 text-grafite hover:border-grafite/50"}`}
+                    ${ativo ? "border-accent bg-accent text-on-accent" : "border-fg/20 text-fg hover:border-fg/50"}`}
                 >
                   {v.label}
                 </motion.button>
@@ -62,10 +62,10 @@ export default function OptionSelector({
         </fieldset>
       ))}
 
-      <p className="font-display text-3xl font-bold text-grafite" aria-live="polite">
+      <p className="font-display text-3xl font-semibold tracking-display text-fg" aria-live="polite">
         {variante ? formatBRL(variante.preco) : "Combinação indisponível"}
         {variante && !variante.disponivel && (
-          <span className="ml-3 text-base font-sans font-medium text-grafite/60">esgotado</span>
+          <span className="ml-3 text-base font-sans font-medium text-muted">esgotado</span>
         )}
       </p>
     </div>

@@ -2,12 +2,175 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #FFF8F0; /* Creme Algodão */
-  --foreground: #33303E; /* Grafite Suave */
+/*
+ * Design system "glass" (etapa 3, ADR 0003).
+ *
+ * Cores em canais RGB ("243 239 233") para o Tailwind aplicar opacidade:
+ * `bg-canvas/80` vira `rgb(243 239 233 / 0.8)`.
+ *
+ * O acento vem do store.config.ts: o layout grava --accent-light e
+ * --accent-dark no <html>, e cada tema escolhe o seu aqui. Os temas são
+ * seletores de atributo, não de :root, para funcionarem aninhados
+ * (a página /playground mostra os dois lado a lado).
+ */
+:root,
+[data-theme="light"] {
+  --canvas: 243 239 233;
+  --raised: 252 250 247;
+  --fg: 27 25 23;
+  --muted: 102 95 88;
+  --accent: var(--accent-light);
+  --accent-strong: var(--accent-light-strong);
+  --on-accent: 27 25 23;
+
+  --glass-1: rgb(255 255 255 / 0.28);
+  --glass-2: rgb(255 255 255 / 0.42);
+  --glass-3: rgb(255 255 255 / 0.6);
+  --glass-edge: rgb(255 255 255 / 0.75);
+  --glass-sheen: rgb(255 255 255 / 0.55);
+  --glass-shadow: 0 1px 0 rgb(255 255 255 / 0.6) inset, 0 18px 40px -24px rgb(60 40 20 / 0.35);
+  --glow: rgb(var(--accent) / 0.28);
+  --grid-line: rgb(27 25 23 / 0.05);
+  color-scheme: light;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
+[data-theme="dark"] {
+  --canvas: 15 21 38;
+  --raised: 23 31 54;
+  --fg: 241 239 234;
+  --muted: 160 167 186;
+  --accent: var(--accent-dark);
+  --accent-strong: var(--accent-dark-strong);
+  --on-accent: 15 21 38;
+
+  --glass-1: rgb(255 255 255 / 0.05);
+  --glass-2: rgb(255 255 255 / 0.08);
+  --glass-3: rgb(255 255 255 / 0.13);
+  --glass-edge: rgb(255 255 255 / 0.18);
+  --glass-sheen: rgb(255 255 255 / 0.14);
+  --glass-shadow: 0 1px 0 rgb(255 255 255 / 0.08) inset, 0 24px 60px -30px rgb(0 0 0 / 0.7);
+  --glow: rgb(var(--accent) / 0.22);
+  --grid-line: rgb(241 239 234 / 0.04);
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    background: rgb(var(--canvas));
+    color: rgb(var(--fg));
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /*
+   * Fundo com profundidade: duas manchas de luz do acento, uma grade fina e
+   * ruído. Sem isso o vidro não tem o que desfocar e vira só um cinza.
+   */
+  body {
+    min-height: 100vh;
+    background:
+      radial-gradient(60rem 40rem at 85% -10%, var(--glow), transparent 60%),
+      radial-gradient(40rem 30rem at -10% 40%, rgb(var(--accent) / 0.1), transparent 60%),
+      linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0 / 64px 64px,
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0 / 64px 64px,
+      rgb(var(--canvas));
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  ::selection {
+    background: rgb(var(--accent) / 0.35);
+  }
+}
+
+/*
+ * Fora de @layer de propósito: o Tailwind descarta classes de @layer que não
+ * aparecem escritas por extenso no código, e o GlassPanel monta o nome
+ * (`glass-${level}`). Em @layer, glass-1 e glass-3 sumiam do build.
+ */
+/*
+ * Três níveis de vidro. Regra de desempenho: no máximo três elementos com
+ * backdrop-filter visíveis ao mesmo tempo (nav + dois painéis). O resto usa
+ * .glass-flat, que tem o mesmo visual sem o desfoque.
+ */
+/*
+ * Receita do vidro: camada translúcida + reflexo de luz no topo (gradiente)
+ * + borda clara. O desfoque só aparece se houver forma nítida atrás:
+ * use <LightField> (components/ui) ou mídia sob o painel.
+ */
+.glass-1,
+.glass-2,
+.glass-3,
+.glass-flat {
+  border: 1px solid var(--glass-edge);
+  box-shadow: var(--glass-shadow);
+  background-image: linear-gradient(160deg, var(--glass-sheen), transparent 45%);
+}
+.glass-1 {
+  background-color: var(--glass-1);
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+}
+.glass-2 {
+  background-color: var(--glass-2);
+  backdrop-filter: blur(18px) saturate(170%);
+  -webkit-backdrop-filter: blur(18px) saturate(170%);
+}
+.glass-3 {
+  background-color: var(--glass-3);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+}
+.glass-flat {
+  background-color: var(--glass-2);
+}
+
+/* Sem suporte a backdrop-filter: vidro vira superfície sólida legível. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-1,
+  .glass-2,
+  .glass-3 {
+    background-color: rgb(var(--raised) / 0.92);
+  }
+}
+
+@layer utilities {
+  .marquee-track {
+    animation: marquee var(--marquee-duration, 30s) linear infinite;
+  }
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

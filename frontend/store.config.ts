@@ -27,8 +27,12 @@ export const storeConfig = {
     // instagram: "exemplo",
   },
   theme: {
-    accent: "#FF7E67",
-    accentStrong: "#F2654D",
+    // Cobre: quente no claro, mais luminoso no escuro (contraste AA sobre o fundo).
+    accent: "#C98A5E",
+    accentStrong: "#A86D44",
+    accentDark: "#E0A072",
+    accentDarkStrong: "#EDB48A",
+    defaultMode: "system",
   },
   announcements: [
     "Frete grátis acima de R$ 279",
