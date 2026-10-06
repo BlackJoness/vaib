@@ -37,9 +37,15 @@ export interface StoreConfig {
     instagram?: string;
   };
   theme: {
-    /** Hex de 6 dígitos, ex.: #FF7E67. */
+    /** Acento no tema claro. Hex de 6 dígitos, ex.: #C98A5E. */
     accent: string;
+    /** Variação para hover/pressionado no tema claro. */
     accentStrong: string;
+    /** Acento no tema escuro (costuma ser mais claro, para manter contraste). */
+    accentDark: string;
+    accentDarkStrong: string;
+    /** Tema na primeira visita. "system" segue o sistema operacional. */
+    defaultMode: "light" | "dark" | "system";
   };
   /** Avisos da barra do topo. Vazio esconde a barra. */
   announcements: string[];
@@ -85,8 +91,12 @@ export function validateStoreConfig(c: StoreConfig): StoreConfig {
     erros.push("contact.instagram: usuário sem @, até 30 caracteres");
   }
 
-  if (!HEX.test(c.theme.accent)) erros.push("theme.accent: cor em hex de 6 dígitos, ex.: #FF7E67");
-  if (!HEX.test(c.theme.accentStrong)) erros.push("theme.accentStrong: cor em hex de 6 dígitos, ex.: #F2654D");
+  for (const campo of ["accent", "accentStrong", "accentDark", "accentDarkStrong"] as const) {
+    if (!HEX.test(c.theme[campo])) erros.push(`theme.${campo}: cor em hex de 6 dígitos, ex.: #C98A5E`);
+  }
+  if (!["light", "dark", "system"].includes(c.theme.defaultMode)) {
+    erros.push('theme.defaultMode: "light", "dark" ou "system"');
+  }
 
   if (c.announcements.length > 6) erros.push("announcements: no máximo 6 avisos");
   if (c.nav.length > 8) erros.push("nav: no máximo 8 links");

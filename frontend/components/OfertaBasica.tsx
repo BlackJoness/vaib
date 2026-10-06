@@ -11,18 +11,18 @@ export default function OfertaBasica({ produto }: { produto: Product }) {
       <Reveal>
         <div className="grid gap-10 md:grid-cols-2 md:items-start">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-wide text-coral">
+            <p className="text-sm font-semibold uppercase tracking-wide text-accent">
               {produto.kind === "SERVICE" ? "Serviço" : "Produto"}
             </p>
-            <h2 className="mt-2 font-display text-4xl font-bold text-grafite">{produto.nome}</h2>
-            {produto.tagline && <p className="mt-3 text-lg text-grafite/80">{produto.tagline}</p>}
-            {produto.descricao && <p className="mt-4 text-grafite/70">{produto.descricao}</p>}
+            <h2 className="mt-2 font-display text-4xl font-semibold tracking-display text-fg">{produto.nome}</h2>
+            {produto.tagline && <p className="mt-3 text-lg text-muted">{produto.tagline}</p>}
+            {produto.descricao && <p className="mt-4 text-muted">{produto.descricao}</p>}
           </div>
-          <div className="rounded-xl2 bg-white p-6 shadow-soft">
+          <div className="rounded-xl2 bg-raised/60 p-6 shadow-soft">
             <OptionSelector produto={produto} />
             <button
               type="button"
-              className="mt-6 w-full rounded-full bg-coral px-6 py-3 font-semibold text-white transition-colors hover:bg-coral-600"
+              className="mt-6 w-full rounded-full bg-accent px-6 py-3 font-semibold text-on-accent transition-colors hover:bg-accent-strong"
             >
               {produto.kind === "SERVICE" ? "Quero este projeto" : "Comprar"}
             </button>

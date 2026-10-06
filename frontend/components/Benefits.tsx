@@ -17,16 +17,16 @@ function Icon({ d }: { d: string }) {
 
 export default function Benefits() {
   return (
-    <section className="border-y border-grafite/10 bg-white">
+    <section className="border-y border-fg/10 bg-raised/40">
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-6 py-8 md:grid-cols-4 md:px-8">
         {ITENS.map((i) => (
           <div key={i.titulo} className="flex items-center gap-3">
-            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-coral/12 text-coral">
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
               <Icon d={i.d} />
             </span>
             <div>
-              <p className="font-display text-sm font-semibold text-grafite">{i.titulo}</p>
-              <p className="text-xs text-grafite/60">{i.sub}</p>
+              <p className="font-display text-sm font-semibold text-fg">{i.titulo}</p>
+              <p className="text-xs text-muted">{i.sub}</p>
             </div>
           </div>
         ))}
