@@ -15,6 +15,7 @@ const config: Config = {
         muted: rgb("muted"),
         accent: { DEFAULT: rgb("accent"), strong: rgb("accent-strong") },
         "on-accent": rgb("on-accent"),
+        danger: rgb("danger"),
       },
       fontFamily: {
         sans: ["var(--font-geist)", "system-ui", "sans-serif"],

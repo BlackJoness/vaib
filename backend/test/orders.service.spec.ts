@@ -66,7 +66,7 @@ describe("OrdersService", () => {
 
     it("serviço (estoque null): não mexe em estoque e marca o pedido como SERVICE", async () => {
       prisma.variant.findUnique.mockResolvedValue(variante("2900", "SERVICE", null));
-      const r = (await service.create(pedido())) as { fulfillmentType: string; total: Prisma.Decimal };
+      const r = (await service.create(pedido({ clienteWhatsapp: "5581999990000" }))) as { fulfillmentType: string; total: Prisma.Decimal };
       expect(prisma.variant.updateMany).not.toHaveBeenCalled();
       expect(r.fulfillmentType).toBe("SERVICE");
       expect(r.total.toString()).toBe("2900");
@@ -81,6 +81,19 @@ describe("OrdersService", () => {
       expect(r.items.create[0].descricao).toBe("XPTO · Casa completa · 15 dias");
       expect(r.clienteWhatsapp).toBe("5581999990000");
       expect(r.clienteMensagem).toBe("Prefiro de manhã");
+    });
+
+    it("serviço sem WhatsApp é recusado antes de qualquer escrita", async () => {
+      prisma.variant.findUnique.mockResolvedValue(variante("2900", "SERVICE", null));
+      await expect(service.create(pedido())).rejects.toBeInstanceOf(BadRequestException);
+      expect(prisma.variant.updateMany).not.toHaveBeenCalled();
+      expect(prisma.order.create).not.toHaveBeenCalled();
+    });
+
+    it("produto físico continua aceitando pedido sem WhatsApp", async () => {
+      prisma.variant.findUnique.mockResolvedValue(variante("10", "PHYSICAL", 3));
+      prisma.variant.updateMany.mockResolvedValue({ count: 1 });
+      await expect(service.create(pedido())).resolves.toBeTruthy();
     });
 
     it("recusa físico e serviço no mesmo pedido", async () => {

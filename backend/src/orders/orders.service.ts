@@ -51,6 +51,12 @@ export class OrdersService {
         }
         fulfillmentType = variant.product.kind;
 
+        // Serviço fecha por contato (ADR 0001): sem WhatsApp não há como atender.
+        // Checado antes de mexer em estoque, para não abrir a transação à toa.
+        if (fulfillmentType === ProductKind.SERVICE && !dto.clienteWhatsapp) {
+          throw new BadRequestException("clienteWhatsapp é obrigatório para pedido de serviço");
+        }
+
         if (variant.estoque !== null) {
           // Decremento condicional: só baixa se ainda houver estoque suficiente.
           // Evita corrida entre pedidos simultâneos (oversell).
