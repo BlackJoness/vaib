@@ -11,6 +11,7 @@ import Counter from "@/components/ui/Counter";
 import Accordion from "@/components/ui/Accordion";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import SerifEmphasis from "@/components/ui/SerifEmphasis";
+import LightField from "@/components/ui/LightField";
 
 // Documentação viva do design system: cada componente nos dois temas.
 // Fora do índice de busca; é página de trabalho, não de venda.
@@ -29,7 +30,18 @@ function BlocoDeVidro() {
   );
 }
 
-function Amostra({ nome, uso, children }: { nome: string; uso: string; children: React.ReactNode }) {
+function Amostra({
+  nome,
+  uso,
+  children,
+  luz = false,
+}: {
+  nome: string;
+  uso: string;
+  children: React.ReactNode;
+  /** Põe formas de luz atrás, para o vidro ter o que desfocar. */
+  luz?: boolean;
+}) {
   return (
     <section className="space-y-4 border-t border-fg/10 pt-8">
       <div>
@@ -38,9 +50,12 @@ function Amostra({ nome, uso, children }: { nome: string; uso: string; children:
       </div>
       <div className="grid gap-4 md:grid-cols-2">
         {(["light", "dark"] as const).map((t) => (
-          <div key={t} data-theme={t} className="rounded-panel bg-canvas p-6 text-fg ring-1 ring-fg/10">
-            <p className="mb-4 text-xs text-muted">Tema {t === "light" ? "claro" : "escuro"}</p>
-            {children}
+          <div key={t} data-theme={t} className="relative overflow-hidden rounded-panel bg-canvas p-6 text-fg ring-1 ring-fg/10">
+            {luz && <LightField />}
+            <div className="relative">
+              <p className="mb-4 text-xs text-muted">Tema {t === "light" ? "claro" : "escuro"}</p>
+              {children}
+            </div>
           </div>
         ))}
       </div>
@@ -69,18 +84,21 @@ export default function Playground() {
         <ThemeToggle className="glass-flat" />
       </header>
 
-      <Amostra nome="GlassPanel" uso="Superfície base. Níveis 1, 2 e 3 desfocam o fundo; flat tem o visual sem o custo do desfoque.">
-        <div className="grid grid-cols-2 gap-3">
+      <Amostra luz nome="GlassPanel" uso="Superfície base. Níveis 1, 2 e 3 desfocam o que está atrás (aqui, as formas de luz); flat tem o visual sem o custo do desfoque.">
+        <div className="grid grid-cols-2 gap-3 pt-10">
           {([1, 2, 3, "flat"] as const).map((l) => (
-            <GlassPanel key={l} level={l} className="p-4 text-sm">
-              Nível {l}
+            <GlassPanel key={l} level={l} className="p-5 text-sm">
+              <span className="font-medium">Nível {l}</span>
+              <span className="mt-1 block text-xs text-muted">
+                {l === "flat" ? "sem desfoque" : `desfoque ${({ 1: 10, 2: 18, 3: 28 } as const)[l]}px`}
+              </span>
             </GlassPanel>
           ))}
         </div>
       </Amostra>
 
-      <Amostra nome="SpotlightCard" uso="Card com halo do acento seguindo o ponteiro. Para benefícios e passos.">
-        <SpotlightCard className="p-6">
+      <Amostra luz nome="SpotlightCard" uso="Card com halo do acento seguindo o ponteiro. Para benefícios e passos.">
+        <SpotlightCard level={2} className="p-6">
           <p className="font-semibold">Orçamento fechado</p>
           <p className="mt-1 text-sm text-muted">Preço definido antes de começar.</p>
         </SpotlightCard>
@@ -92,14 +110,14 @@ export default function Playground() {
         </TiltMedia>
       </Amostra>
 
-      <Amostra nome="MagneticButton" uso="Ação principal (primary) e secundária (ghost). Vira link quando recebe href.">
+      <Amostra luz nome="MagneticButton" uso="Ação principal (primary) e secundária (ghost). Vira link quando recebe href.">
         <div className="flex flex-wrap gap-3">
           <MagneticButton>Quero este projeto</MagneticButton>
           <MagneticButton variant="ghost">Ver como funciona</MagneticButton>
         </div>
       </Amostra>
 
-      <Amostra nome="NavItem" uso="Link da nav em pill. O número é a ordem da seção na página.">
+      <Amostra luz nome="NavItem" uso="Link da nav em pill. O número é a ordem da seção na página.">
         <nav className="glass-flat flex w-fit gap-1 rounded-full p-1">
           <NavItem href="#" index={1}>Projeto</NavItem>
           <NavItem href="#" index={2}>Como funciona</NavItem>
@@ -115,8 +133,10 @@ export default function Playground() {
         </div>
       </Amostra>
 
-      <Amostra nome="Accordion" uso="FAQ. Uma resposta aberta por vez, navegável por teclado.">
-        <Accordion items={FAQ} />
+      <Amostra luz nome="Accordion" uso="FAQ. Uma resposta aberta por vez, navegável por teclado.">
+        <GlassPanel level={2} className="px-6">
+          <Accordion items={FAQ} />
+        </GlassPanel>
       </Amostra>
 
       <Amostra nome="Marquee" uso="Faixa contínua para avisos ou depoimentos curtos. Pausa no hover.">

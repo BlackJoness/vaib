@@ -9,9 +9,12 @@ import type { PointerEvent } from "react";
 export default function SpotlightCard({
   children,
   className = "",
+  level = "flat",
 }: {
   children: React.ReactNode;
   className?: string;
+  /** Mesmos níveis do GlassPanel. Padrão sem desfoque: cards costumam vir em grupo. */
+  level?: 1 | 2 | 3 | "flat";
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -27,7 +30,7 @@ export default function SpotlightCard({
     <div
       ref={ref}
       onPointerMove={mover}
-      className={`group glass-flat relative overflow-hidden rounded-panel ${className}`}
+      className={`group ${level === "flat" ? "glass-flat" : `glass-${level}`} relative overflow-hidden rounded-panel ${className}`}
     >
       <div
         aria-hidden

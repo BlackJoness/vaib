@@ -23,10 +23,11 @@
   --accent-strong: var(--accent-light-strong);
   --on-accent: 27 25 23;
 
-  --glass-1: rgb(255 255 255 / 0.35);
-  --glass-2: rgb(255 255 255 / 0.55);
-  --glass-3: rgb(255 255 255 / 0.72);
-  --glass-edge: rgb(255 255 255 / 0.7);
+  --glass-1: rgb(255 255 255 / 0.28);
+  --glass-2: rgb(255 255 255 / 0.42);
+  --glass-3: rgb(255 255 255 / 0.6);
+  --glass-edge: rgb(255 255 255 / 0.75);
+  --glass-sheen: rgb(255 255 255 / 0.55);
   --glass-shadow: 0 1px 0 rgb(255 255 255 / 0.6) inset, 0 18px 40px -24px rgb(60 40 20 / 0.35);
   --glow: rgb(var(--accent) / 0.28);
   --grid-line: rgb(27 25 23 / 0.05);
@@ -42,10 +43,11 @@
   --accent-strong: var(--accent-dark-strong);
   --on-accent: 15 21 38;
 
-  --glass-1: rgb(255 255 255 / 0.03);
-  --glass-2: rgb(255 255 255 / 0.06);
-  --glass-3: rgb(255 255 255 / 0.1);
-  --glass-edge: rgb(255 255 255 / 0.12);
+  --glass-1: rgb(255 255 255 / 0.05);
+  --glass-2: rgb(255 255 255 / 0.08);
+  --glass-3: rgb(255 255 255 / 0.13);
+  --glass-edge: rgb(255 255 255 / 0.18);
+  --glass-sheen: rgb(255 255 255 / 0.14);
   --glass-shadow: 0 1px 0 rgb(255 255 255 / 0.08) inset, 0 24px 60px -30px rgb(0 0 0 / 0.7);
   --glow: rgb(var(--accent) / 0.22);
   --grid-line: rgb(241 239 234 / 0.04);
@@ -96,45 +98,54 @@
   }
 }
 
-@layer components {
-  /*
-   * Três níveis de vidro. Regra de desempenho: no máximo três elementos com
-   * backdrop-filter visíveis ao mesmo tempo (nav + dois painéis). O resto usa
-   * .glass-flat, que tem o mesmo visual sem o desfoque.
-   */
+/*
+ * Fora de @layer de propósito: o Tailwind descarta classes de @layer que não
+ * aparecem escritas por extenso no código, e o GlassPanel monta o nome
+ * (`glass-${level}`). Em @layer, glass-1 e glass-3 sumiam do build.
+ */
+/*
+ * Três níveis de vidro. Regra de desempenho: no máximo três elementos com
+ * backdrop-filter visíveis ao mesmo tempo (nav + dois painéis). O resto usa
+ * .glass-flat, que tem o mesmo visual sem o desfoque.
+ */
+/*
+ * Receita do vidro: camada translúcida + reflexo de luz no topo (gradiente)
+ * + borda clara. O desfoque só aparece se houver forma nítida atrás:
+ * use <LightField> (components/ui) ou mídia sob o painel.
+ */
+.glass-1,
+.glass-2,
+.glass-3,
+.glass-flat {
+  border: 1px solid var(--glass-edge);
+  box-shadow: var(--glass-shadow);
+  background-image: linear-gradient(160deg, var(--glass-sheen), transparent 45%);
+}
+.glass-1 {
+  background-color: var(--glass-1);
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+}
+.glass-2 {
+  background-color: var(--glass-2);
+  backdrop-filter: blur(18px) saturate(170%);
+  -webkit-backdrop-filter: blur(18px) saturate(170%);
+}
+.glass-3 {
+  background-color: var(--glass-3);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+}
+.glass-flat {
+  background-color: var(--glass-2);
+}
+
+/* Sem suporte a backdrop-filter: vidro vira superfície sólida legível. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .glass-1,
   .glass-2,
-  .glass-3,
-  .glass-flat {
-    border: 1px solid var(--glass-edge);
-    box-shadow: var(--glass-shadow);
-  }
-  .glass-1 {
-    background: var(--glass-1);
-    backdrop-filter: blur(8px) saturate(140%);
-    -webkit-backdrop-filter: blur(8px) saturate(140%);
-  }
-  .glass-2 {
-    background: var(--glass-2);
-    backdrop-filter: blur(16px) saturate(150%);
-    -webkit-backdrop-filter: blur(16px) saturate(150%);
-  }
   .glass-3 {
-    background: var(--glass-3);
-    backdrop-filter: blur(24px) saturate(160%);
-    -webkit-backdrop-filter: blur(24px) saturate(160%);
-  }
-  .glass-flat {
-    background: var(--glass-2);
-  }
-
-  /* Sem suporte a backdrop-filter: vidro vira superfície sólida legível. */
-  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    .glass-1,
-    .glass-2,
-    .glass-3 {
-      background: rgb(var(--raised) / 0.92);
-    }
+    background-color: rgb(var(--raised) / 0.92);
   }
 }
 
