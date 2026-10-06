@@ -3,32 +3,29 @@ import type { Product } from "./types";
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
 
 /**
- * Busca produtos na API NestJS.
- * `revalidate` mantém SSR com cache leve (ISR). Em caso de falha de rede,
- * retorna [] para a página renderizar sem quebrar (degradação graciosa).
+ * Chamadas à API NestJS com cache leve (ISR, 60 s). Em falha de rede ou
+ * resposta não-2xx, devolve null para a página renderizar com o fallback
+ * em vez de quebrar (degradação graciosa).
  */
-export async function getProducts(): Promise<Product[]> {
+async function buscar<T>(caminho: string): Promise<T | null> {
   try {
-    const res = await fetch(`${API_URL}/products`, {
-      next: { revalidate: 60 },
-    });
-    if (!res.ok) return [];
-    return (await res.json()) as Product[];
-  } catch {
-    return [];
-  }
-}
-
-export async function getProductBySlug(
-  slug: string,
-): Promise<Product | null> {
-  try {
-    const res = await fetch(`${API_URL}/products/${slug}`, {
-      next: { revalidate: 60 },
-    });
+    const res = await fetch(`${API_URL}${caminho}`, { next: { revalidate: 60 } });
     if (!res.ok) return null;
-    return (await res.json()) as Product;
+    return (await res.json()) as T;
   } catch {
     return null;
   }
+}
+
+/** O produto da home (loja de um produto só). */
+export function getProdutoDestaque() {
+  return buscar<Product>("/products/destaque");
+}
+
+export function getProducts(): Promise<Product[]> {
+  return buscar<Product[]>("/products").then((r) => r ?? []);
+}
+
+export function getProductBySlug(slug: string) {
+  return buscar<Product>(`/products/${slug}`);
 }

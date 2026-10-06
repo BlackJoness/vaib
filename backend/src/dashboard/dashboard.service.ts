@@ -1,5 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
+import {
+  ProductOption,
+  VariantAttributes,
+  descreverAtributos,
+} from "../products/product-content.types";
 
 const LIMITE_ESTOQUE_BAIXO = 5;
 
@@ -39,9 +44,10 @@ export class DashboardService {
       if (top) produtoMaisVendido = { nome: top[0], unidades: top[1] };
     }
 
-    // 2) Alerta de estoque baixo por tamanho
+    // 2) Alerta de estoque baixo. Variantes sem controle de estoque
+    //    (estoque null: serviço ou ilimitado) ficam de fora.
     const estoqueBaixo = await this.prisma.variant.findMany({
-      where: { estoque: { lte: LIMITE_ESTOQUE_BAIXO } },
+      where: { estoque: { not: null, lte: LIMITE_ESTOQUE_BAIXO } },
       include: { product: true },
       orderBy: { estoque: "asc" },
     });
@@ -51,9 +57,11 @@ export class DashboardService {
       alertasEstoqueBaixo: estoqueBaixo.map((v) => ({
         sku: v.sku,
         produto: v.product.nome,
-        cor: v.cor,
-        tamanho: v.tamanho, // P | M | G | GG
-        estoque: v.estoque,
+        variante: descreverAtributos(
+          (v.product.options ?? []) as unknown as ProductOption[],
+          (v.attributes ?? {}) as VariantAttributes,
+        ),
+        estoque: v.estoque as number,
       })),
     };
   }

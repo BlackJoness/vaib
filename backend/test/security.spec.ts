@@ -56,9 +56,9 @@ describe("Segurança HTTP", () => {
   describe("rotas públicas", () => {
     it("GET /products é público e não expõe o estoque exato", async () => {
       prisma.product.findMany.mockResolvedValue([
-        { id: "p1", slug: "x", nome: "X", ativo: true, variants: [
-          { id: "v1", sku: "S1", cor: "C", corHex: "#000", tamanho: "P", preco: "10.00", estoque: 7 },
-          { id: "v2", sku: "S2", cor: "C", corHex: "#000", tamanho: "M", preco: "10.00", estoque: 0 },
+        { id: "p1", slug: "x", nome: "X", ativo: true, options: [], media: [], content: {}, variants: [
+          { id: "v1", sku: "S1", attributes: { tamanho: "P" }, preco: "10.00", estoque: 7 },
+          { id: "v2", sku: "S2", attributes: { tamanho: "M" }, preco: "10.00", estoque: 0 },
         ] },
       ]);
       const r = await request(app.getHttpServer()).get("/products").expect(200);

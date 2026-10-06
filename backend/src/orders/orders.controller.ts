@@ -17,9 +17,15 @@ export class OrdersController {
     return this.orders.create(dto);
   }
 
-  // Só admin: Aguardando Pagamento → Em Separação → Enviado
+  // Só admin: Novo → Em contato → Confirmado → Concluído
   @Patch(":id/status")
   advance(@Param("id") id: string) {
     return this.orders.advanceStatus(id);
+  }
+
+  // Só admin: cancela de qualquer estado não final
+  @Patch(":id/cancel")
+  cancel(@Param("id") id: string) {
+    return this.orders.cancel(id);
   }
 }

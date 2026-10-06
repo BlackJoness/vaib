@@ -5,7 +5,7 @@ import { DashboardService } from "./dashboard.service";
 export class DashboardController {
   constructor(private readonly dashboard: DashboardService) {}
 
-  // Só admin (guard global). Produto mais vendido + alertas de estoque baixo por tamanho
+  // Só admin (guard global). Produto mais vendido + alertas de estoque baixo por variante
   @Get("kpis")
   kpis() {
     return this.dashboard.getKpis();

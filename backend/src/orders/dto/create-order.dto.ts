@@ -5,7 +5,9 @@ import {
   IsArray,
   IsEmail,
   IsInt,
+  IsOptional,
   IsString,
+  Matches,
   Max,
   MaxLength,
   Min,
@@ -45,6 +47,20 @@ export class CreateOrderDto {
   @IsEmail()
   @MaxLength(254)
   clienteEmail!: string;
+
+  // Só dígitos, com DDI e DDD. É por aqui que o lojista responde (ADR 0001).
+  @IsOptional()
+  @Transform(({ value }) => (typeof value === "string" ? value.replace(/\D/g, "") : value))
+  @IsString()
+  @Matches(/^\d{10,15}$/, { message: "clienteWhatsapp precisa ter de 10 a 15 dígitos, com DDI e DDD" })
+  clienteWhatsapp?: string;
+
+  // Preferência de horário, endereço, observação do cliente.
+  @IsOptional()
+  @Transform(aparar)
+  @IsString()
+  @MaxLength(500)
+  clienteMensagem?: string;
 
   @IsArray()
   @ArrayMinSize(1)
